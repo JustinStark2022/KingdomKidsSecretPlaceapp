@@ -39,10 +39,10 @@ const About: React.FC = () => {
       <Card className="overflow-hidden shadow-md">
         <CardContent className="p-6">
           <div className="flex flex-col md:flex-row items-start gap-6">
-            <div className="flex-shrink-0 flex flex-col items-center">
+            <div className="flex-shrink-0 flex flex-col">
               <Logo size="large" />
               <div className="max-w-md mt-6 p-6 border border-primary/40 rounded-md bg-primary/5 neon-border shadow-lg">
-                <p className="text-center text-sm scripture-heading leading-relaxed text-foreground">
+                <p className="text-sm scripture-heading leading-relaxed text-foreground">
                   <span className="font-bold high-contrast-text text-primary neon-text">Because you dwell in the secret place of the Most High,</span><br/>
                   you shall abide under the shadow of the Almighty.<br/>
                   I will say of the Lord, He is your refuge and your fortress,<br/>
@@ -59,7 +59,7 @@ const About: React.FC = () => {
                   <span className="font-bold high-contrast-text text-primary neon-text">in the Name of Jesus Christ, your Lord and Savior!</span>
                 </p>
               </div>
-              <p className="text-center text-sm text-muted-foreground mt-4 font-serif italic">
+              <p className="text-sm text-muted-foreground mt-4 font-serif italic">
                 "Jesus said, 'Let the little children come to me'" - Matthew 19:14
               </p>
             </div>
