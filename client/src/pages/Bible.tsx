@@ -2,14 +2,15 @@ import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import BibleReader from "@/components/scripture/BibleReader";
 import ScriptureMemorization from "@/components/scripture/ScriptureMemorization";
-import { BookOpen, Star } from "lucide-react";
+import PrayerJournal from "@/components/scripture/PrayerJournal";
+import { BookOpen, Star, BookHeart } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { User } from "@shared/schema";
 
 const Bible: React.FC = () => {
   // Fetch current user to determine if they're a parent or child
   const { data: currentUser } = useQuery<User>({
-    queryKey: ['/api/users/me'],
+    queryKey: ['/api/auth/me'],
   });
   
   return (
@@ -31,6 +32,10 @@ const Bible: React.FC = () => {
             <Star className="mr-2 h-4 w-4" />
             Scripture Memorization
           </TabsTrigger>
+          <TabsTrigger value="prayer" className="flex items-center">
+            <BookHeart className="mr-2 h-4 w-4" />
+            Prayer Journal
+          </TabsTrigger>
         </TabsList>
         
         <TabsContent value="reader">
@@ -39,6 +44,10 @@ const Bible: React.FC = () => {
         
         <TabsContent value="memorize">
           <ScriptureMemorization />
+        </TabsContent>
+        
+        <TabsContent value="prayer">
+          <PrayerJournal />
         </TabsContent>
       </Tabs>
     </div>

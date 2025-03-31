@@ -8,7 +8,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 const Dashboard: React.FC = () => {
   // Fetch current user
   const { data: currentUser, isLoading } = useQuery<User>({
-    queryKey: ['/api/users/me'],
+    queryKey: ['/api/auth/me'],
   });
   
   if (isLoading) {
