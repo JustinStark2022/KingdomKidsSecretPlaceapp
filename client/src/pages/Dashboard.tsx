@@ -4,10 +4,12 @@ import ChildDashboard from "@/components/dashboard/ChildDashboard";
 import { useQuery } from "@tanstack/react-query";
 import { User } from "@shared/schema";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { AlertCircle } from "lucide-react";
 
 const Dashboard: React.FC = () => {
   // Fetch current user
-  const { data: currentUser, isLoading } = useQuery<User>({
+  const { data: currentUser, isLoading, error } = useQuery<User>({
     queryKey: ['/api/auth/me'],
   });
   
@@ -23,14 +25,40 @@ const Dashboard: React.FC = () => {
       </div>
     );
   }
+
+  if (error) {
+    return (
+      <Alert variant="destructive">
+        <AlertCircle className="h-4 w-4" />
+        <AlertDescription>
+          There was a problem loading your dashboard. Please try refreshing the page.
+        </AlertDescription>
+      </Alert>
+    );
+  }
   
-  // Render appropriate dashboard based on user type
+  if (!currentUser) {
+    return (
+      <div className="space-y-6">
+        <div>
+          <h2 className="text-2xl font-bold mb-2">
+            <span className="text-primary neon-text">Welcome</span> to Kingdom Kids!
+          </h2>
+          <p className="text-muted-foreground mb-6">Your Christian parental control app with scripture learning</p>
+          
+          <p>Your dashboard is loading. If nothing appears after a few moments, please sign in again.</p>
+        </div>
+      </div>
+    );
+  }
+  
+  // Render appropriate dashboard based on user type (default to child dashboard)
   return (
     <>
-      {currentUser?.isParent ? (
+      {currentUser.isParent ? (
         <ParentDashboard />
       ) : (
-        <ChildDashboard childId={currentUser?.id} />
+        <ChildDashboard childId={currentUser.id} />
       )}
     </>
   );

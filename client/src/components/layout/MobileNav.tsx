@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Link, useLocation } from "wouter";
-import { Home, Search, Bookmark, User } from "lucide-react";
+import { Home, BookOpen, Activity, User } from "lucide-react";
 
 const MobileNav = () => {
   const [location] = useLocation();
@@ -12,8 +12,8 @@ const MobileNav = () => {
 
   const links = [
     { href: "/", label: "Home", icon: <Home className="h-5 w-5" /> },
-    { href: "/bible", label: "Search", icon: <Search className="h-5 w-5" /> },
-    { href: "/lessons", label: "Library", icon: <Bookmark className="h-5 w-5" /> },
+    { href: "/dashboard", label: "Dashboard", icon: <Activity className="h-5 w-5" /> },
+    { href: "/bible", label: "Bible", icon: <BookOpen className="h-5 w-5" /> },
     { href: "/settings", label: "Profile", icon: <User className="h-5 w-5" /> }
   ];
 
@@ -21,17 +21,17 @@ const MobileNav = () => {
     <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-card shadow-md z-30 border-t">
       <div className="flex justify-around items-center py-2">
         {links.map((link) => (
-          <Link key={link.href} href={link.href}>
-            <a
-              className={cn(
-                "flex flex-col items-center p-2",
-                location === link.href ? "text-primary" : "text-muted-foreground"
-              )}
-            >
-              {link.icon}
-              <span className="text-xs mt-1">{link.label}</span>
-            </a>
-          </Link>
+          <div 
+            key={link.href} 
+            className={cn(
+              "flex flex-col items-center p-2 cursor-pointer",
+              location === link.href ? "text-primary" : "text-muted-foreground"
+            )}
+            onClick={() => window.location.href = link.href}
+          >
+            {link.icon}
+            <span className="text-xs mt-1">{link.label}</span>
+          </div>
         ))}
       </div>
     </nav>
