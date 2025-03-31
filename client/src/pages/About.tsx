@@ -32,6 +32,24 @@ const About: React.FC = () => {
           <div className="flex flex-col md:flex-row items-start gap-6">
             <div className="flex-shrink-0 flex flex-col items-center">
               <Logo size="large" />
+              <div className="max-w-md mt-6 p-6 border border-primary/40 rounded-md bg-primary/5 neon-border shadow-lg">
+                <p className="text-center text-sm scripture-heading leading-relaxed text-foreground">
+                  <span className="font-bold text-primary neon-text">Because you dwell in the secret place of the Most High,</span><br/>
+                  you shall abide under the shadow of the Almighty.<br/>
+                  I will say of the Lord, He is your refuge and your fortress,<br/>
+                  your God, in Him shall you trust all the days of your life.<br/>
+                  Surely, He shall deliver you from the snare of the fowler<br/>
+                  and from the noisome pestilence.<br/>
+                  <span className="font-bold text-primary neon-text">You are always safe, always blessed,</span><br/>
+                  always the head and not the tail, more than a conqueror.<br/>
+                  You walk like, talk like, and act like Jesus.<br/>
+                  You are show stock, offspring of God our Father.<br/>
+                  You shall live to be 120 years old, full of God,<br/>
+                  full of grace, full of all that you need<br/>
+                  spirit, body, and soul,<br/>
+                  <span className="font-bold text-primary neon-text">in the Name of Jesus Christ, your Lord and Savior!</span>
+                </p>
+              </div>
               <p className="text-center text-sm text-muted-foreground mt-4 font-serif italic">
                 "Jesus said, 'Let the little children come to me'" - Matthew 19:14
               </p>
