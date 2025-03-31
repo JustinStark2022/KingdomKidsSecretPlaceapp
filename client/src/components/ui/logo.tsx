@@ -6,9 +6,9 @@ interface LogoProps {
 
 const Logo: React.FC<LogoProps> = ({ size = "medium" }) => {
   const sizeClasses = {
-    small: "h-6 w-6",
-    medium: "h-8 w-8",
-    large: "h-12 w-12"
+    small: "h-6",
+    medium: "h-8",
+    large: "h-12"
   };
   
   return (
@@ -20,24 +20,25 @@ const Logo: React.FC<LogoProps> = ({ size = "medium" }) => {
           fill="none" 
           xmlns="http://www.w3.org/2000/svg"
         >
-          {/* Crown shape */}
+          {/* Crown shape - more closely resembling the provided image */}
           <path 
-            d="M3 17L6 9L12 12L18 9L21 17H3Z" 
+            d="M4 16.5L7 10L12 13L17 10L20 16.5H4Z" 
+            fill="currentColor"
+          />
+          {/* Crown points/spikes */}
+          <path 
+            d="M7 8L12 4L17 8" 
             fill="currentColor"
           />
           <path 
-            d="M6 9L12 4L18 9" 
+            d="M9 8L12 6L15 8" 
             fill="currentColor"
           />
-          <path 
-            d="M12 12V20" 
-            stroke="currentColor"
-            strokeWidth="1"
-          />
-          {/* Crown points */}
-          <circle cx="6" cy="8" r="1" fill="hsl(var(--card))" />
-          <circle cx="12" cy="4" r="1" fill="hsl(var(--card))" />
-          <circle cx="18" cy="8" r="1" fill="hsl(var(--card))" />
+          {/* Crown jewels */}
+          <circle cx="7" cy="10" r="0.8" fill="hsl(var(--card))" />
+          <circle cx="12" cy="4" r="0.8" fill="hsl(var(--card))" />
+          <circle cx="17" cy="10" r="0.8" fill="hsl(var(--card))" />
+          <circle cx="12" cy="13" r="0.8" fill="hsl(var(--card))" />
         </svg>
         <svg 
           className={`${sizeClasses[size]} absolute top-0 left-0 text-primary`}
@@ -47,7 +48,7 @@ const Logo: React.FC<LogoProps> = ({ size = "medium" }) => {
         >
           {/* Crown outline */}
           <path 
-            d="M3 17L6 9L12 12L18 9L21 17H3Z" 
+            d="M4 16.5L7 10L12 13L17 10L20 16.5H4Z" 
             fill="none"
             stroke="currentColor"
             strokeWidth="1.5"
@@ -55,24 +56,18 @@ const Logo: React.FC<LogoProps> = ({ size = "medium" }) => {
             strokeLinejoin="round"
           />
           <path 
-            d="M6 9L12 4L18 9" 
+            d="M7 8L12 4L17 8" 
             fill="none"
             stroke="currentColor"
             strokeWidth="1.5"
             strokeLinecap="round"
             strokeLinejoin="round"
-          />
-          <path 
-            d="M12 12V20" 
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
           />
         </svg>
       </div>
-      <div className="ml-2">
-        <h1 className="font-bold text-xl leading-none">Kingdom Kids</h1>
-        <p className="text-sm text-primary neon-text font-semibold leading-none">Secret Place</p>
+      <div className="ml-3">
+        <h1 className="font-bold text-xl text-primary leading-none tracking-tight">Kingdom Kids</h1>
+        <p className="text-sm text-primary neon-text italic font-semibold leading-none">Secret Place</p>
       </div>
     </div>
   );
