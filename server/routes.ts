@@ -7,6 +7,93 @@ import session from "express-session";
 
 // Session is now defined in types/express-session.d.ts
 
+// Mock data for testing
+const mockDashboardSummary = {
+  pendingAlerts: 3,
+  scriptureProgressPercent: 45,
+  lessonsCompleted: 12,
+  totalLessons: 30,
+  prayerEntries: 8,
+  childUsers: []
+};
+
+const mockAlerts = [
+  {
+    id: 1,
+    userId: 1,
+    title: "New Game Detected",
+    message: "Minecraft has been installed on device #1",
+    type: "game",
+    priority: "medium",
+    handled: false,
+    createdAt: new Date().toISOString()
+  },
+  {
+    id: 2,
+    userId: 1,
+    title: "Friend Request",
+    message: "User 'GameMaster99' wants to be friends",
+    type: "social",
+    priority: "high",
+    handled: false,
+    createdAt: new Date().toISOString()
+  },
+  {
+    id: 3,
+    userId: 1,
+    title: "Screen Time Limit Reached",
+    message: "Daily screen time limit reached",
+    type: "time",
+    priority: "low",
+    handled: true,
+    createdAt: new Date().toISOString()
+  }
+];
+
+const mockFriendRequests = [
+  {
+    id: 1,
+    childId: 2,
+    friendUsername: "BiblicalBuddy42",
+    platform: "Minecraft",
+    status: "pending",
+    requestedAt: new Date().toISOString()
+  },
+  {
+    id: 2,
+    childId: 2,
+    friendUsername: "GameMaster99",
+    platform: "Roblox",
+    status: "pending",
+    requestedAt: new Date().toISOString()
+  }
+];
+
+const mockGameMonitoring = [
+  {
+    id: 1,
+    childId: 2,
+    gameName: "Minecraft",
+    category: "creative",
+    contentRating: "E",
+    timeSpent: 120,
+    approved: true,
+    notes: "Educational building game",
+    lastPlayed: new Date().toISOString()
+  },
+  {
+    id: 2,
+    childId: 2,
+    gameName: "Fortnite",
+    category: "action",
+    contentRating: "T",
+    timeSpent: 45,
+    approved: null,
+    notes: "New game detected - needs review",
+    lastPlayed: new Date().toISOString()
+  }
+];
+
 export async function registerRoutes(app: Express): Promise<Server> {
   // Auth routes
   app.post("/api/auth/signup", async (req: Request, res: Response) => {
@@ -136,11 +223,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // For now, return mock data
       const summary = {
-        pendingAlerts: 3,
-        scriptureProgressPercent: 65,
-        lessonsCompleted: 12,
-        totalLessons: 20,
-        prayerEntries: 8,
+        ...mockDashboardSummary,
         childUsers: [
           {
             id: 2,
@@ -236,83 +319,33 @@ export async function registerRoutes(app: Express): Promise<Server> {
   
   // Add additional API routes for other features
   app.get("/api/alerts/recent", (req: Request, res: Response) => {
-    // For now, return some example data
-    const recentAlerts = [
-      {
-        id: 1,
-        userId: 1,
-        type: "game_request",
-        message: "Timmy wants to play Minecraft",
-        handled: false,
-        createdAt: new Date().toISOString()
-      },
-      {
-        id: 2,
-        userId: 1,
-        type: "friend_request",
-        message: "Sarah received a friend request from JohnDoe",
-        handled: true,
-        createdAt: new Date().toISOString()
-      }
-    ];
+    // Check if user is authenticated
+    if (!req.session || !req.session.userId) {
+      return res.status(401).json({ error: "Not authenticated" });
+    }
     
-    res.status(200).json(recentAlerts);
+    // Return mock alerts data
+    res.status(200).json(mockAlerts);
   });
   
   app.get("/api/friend-requests", (req: Request, res: Response) => {
-    const friendRequests = [
-      {
-        id: 1,
-        childId: 2,
-        childName: "Timmy",
-        requestorName: "JohnDoe123",
-        platform: "Roblox",
-        status: "pending",
-        createdAt: new Date().toISOString()
-      },
-      {
-        id: 2,
-        childId: 3,
-        childName: "Sarah",
-        requestorName: "GamerGirl22",
-        platform: "Minecraft",
-        status: "approved",
-        createdAt: new Date().toISOString()
-      }
-    ];
+    // Check if user is authenticated
+    if (!req.session || !req.session.userId) {
+      return res.status(401).json({ error: "Not authenticated" });
+    }
     
-    res.status(200).json(friendRequests);
+    // Return mock friend requests
+    res.status(200).json(mockFriendRequests);
   });
   
   app.get("/api/games/monitoring", (req: Request, res: Response) => {
-    const gameAnalyses = [
-      {
-        id: 1,
-        childId: 2,
-        childName: "Timmy",
-        gameName: "Fortnite",
-        gameContent: "Battle Royale shooter game",
-        contentWarnings: "Mild cartoon violence",
-        esrbRating: "Teen",
-        timeSpentMinutes: 45,
-        approved: true,
-        createdAt: new Date().toISOString()
-      },
-      {
-        id: 2,
-        childId: 2,
-        childName: "Timmy",
-        gameName: "Minecraft",
-        gameContent: "Building and exploration game",
-        contentWarnings: "None",
-        esrbRating: "Everyone",
-        timeSpentMinutes: 60,
-        approved: null,
-        createdAt: new Date().toISOString()
-      }
-    ];
+    // Check if user is authenticated
+    if (!req.session || !req.session.userId) {
+      return res.status(401).json({ error: "Not authenticated" });
+    }
     
-    res.status(200).json(gameAnalyses);
+    // Return mock game monitoring data
+    res.status(200).json(mockGameMonitoring);
   });
   
   // Notifications mock endpoint

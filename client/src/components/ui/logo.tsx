@@ -20,14 +20,24 @@ const Logo: React.FC<LogoProps> = ({ size = "medium" }) => {
           fill="none" 
           xmlns="http://www.w3.org/2000/svg"
         >
+          {/* Crown shape */}
           <path 
-            d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" 
+            d="M3 17L6 9L12 12L18 9L21 17H3Z" 
             fill="currentColor"
           />
           <path 
-            d="M12 6L13.5 9.5L17.5 10L14.5 12.5L15.25 16.5L12 14.5L8.75 16.5L9.5 12.5L6.5 10L10.5 9.5L12 6Z" 
-            fill="hsl(var(--card))"
+            d="M6 9L12 4L18 9" 
+            fill="currentColor"
           />
+          <path 
+            d="M12 12V20" 
+            stroke="currentColor"
+            strokeWidth="1"
+          />
+          {/* Crown points */}
+          <circle cx="6" cy="8" r="1" fill="hsl(var(--card))" />
+          <circle cx="12" cy="4" r="1" fill="hsl(var(--card))" />
+          <circle cx="18" cy="8" r="1" fill="hsl(var(--card))" />
         </svg>
         <svg 
           className={`${sizeClasses[size]} absolute top-0 left-0 text-primary`}
@@ -35,13 +45,28 @@ const Logo: React.FC<LogoProps> = ({ size = "medium" }) => {
           fill="none" 
           xmlns="http://www.w3.org/2000/svg"
         >
+          {/* Crown outline */}
           <path 
-            d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" 
+            d="M3 17L6 9L12 12L18 9L21 17H3Z" 
             fill="none"
             stroke="currentColor"
             strokeWidth="1.5"
             strokeLinecap="round"
             strokeLinejoin="round"
+          />
+          <path 
+            d="M6 9L12 4L18 9" 
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path 
+            d="M12 12V20" 
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
           />
         </svg>
       </div>
