@@ -17,16 +17,7 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ onMenuClick, onNotificationsClick }) => {
-  let theme = "light";
-  let toggleTheme = () => {};
-  
-  try {
-    const themeContext = useTheme();
-    theme = themeContext.theme;
-    toggleTheme = themeContext.toggleTheme;
-  } catch (error) {
-    console.error("Theme context not available:", error);
-  }
+  const { theme, toggleTheme } = useTheme();
   const [location] = useLocation();
   const isMobile = useMediaQuery("(max-width: 768px)");
   

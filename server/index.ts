@@ -1,10 +1,30 @@
 import express, { type Request, Response, NextFunction } from "express";
+import session from "express-session";
+import MemoryStore from "memorystore";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+
+// Create the MemoryStore constructor
+const MemoryStoreStore = MemoryStore(session);
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// Set up session middleware
+app.use(session({
+  secret: "kingdom-kids-secret-place",
+  resave: false,
+  saveUninitialized: false,
+  store: new MemoryStoreStore({
+    checkPeriod: 86400000 // prune expired entries every 24h
+  }),
+  cookie: {
+    maxAge: 86400000, // 24 hours
+    secure: false, // Set to true if using HTTPS
+    httpOnly: true
+  }
+}));
 
 app.use((req, res, next) => {
   const start = Date.now();

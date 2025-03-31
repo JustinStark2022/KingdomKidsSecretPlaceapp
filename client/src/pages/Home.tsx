@@ -37,7 +37,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-16 bg-muted/20 px-4">
+      <section id="features" className="py-16 bg-muted/20 px-4">
         <div className="container mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
             <span className="text-primary neon-text">Features</span> for Christian Parents
@@ -137,7 +137,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* Testimonials */}
-      <section className="py-16 bg-muted/20 px-4">
+      <section id="testimonials" className="py-16 bg-muted/20 px-4">
         <div className="container mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
             What <span className="text-primary neon-text">Parents</span> Are Saying
@@ -214,26 +214,26 @@ const Home: React.FC = () => {
               <div>
                 <h3 className="font-bold mb-4">Product</h3>
                 <ul className="space-y-2">
-                  <li><Link href="/about"><a className="text-muted-foreground hover:text-foreground">About</a></Link></li>
-                  <li><a href="#features" className="text-muted-foreground hover:text-foreground">Features</a></li>
-                  <li><a href="#testimonials" className="text-muted-foreground hover:text-foreground">Testimonials</a></li>
+                  <li><Link href="/about"><div className="text-muted-foreground hover:text-foreground cursor-pointer">About</div></Link></li>
+                  <li><div className="text-muted-foreground hover:text-foreground cursor-pointer" onClick={() => document.getElementById('features')?.scrollIntoView()}>Features</div></li>
+                  <li><div className="text-muted-foreground hover:text-foreground cursor-pointer" onClick={() => document.getElementById('testimonials')?.scrollIntoView()}>Testimonials</div></li>
                 </ul>
               </div>
               
               <div>
                 <h3 className="font-bold mb-4">Resources</h3>
                 <ul className="space-y-2">
-                  <li><a href="#" className="text-muted-foreground hover:text-foreground">Help Center</a></li>
-                  <li><a href="#" className="text-muted-foreground hover:text-foreground">Privacy Policy</a></li>
-                  <li><a href="#" className="text-muted-foreground hover:text-foreground">Terms of Service</a></li>
+                  <li><div className="text-muted-foreground hover:text-foreground cursor-pointer">Help Center</div></li>
+                  <li><div className="text-muted-foreground hover:text-foreground cursor-pointer">Privacy Policy</div></li>
+                  <li><div className="text-muted-foreground hover:text-foreground cursor-pointer">Terms of Service</div></li>
                 </ul>
               </div>
               
               <div>
                 <h3 className="font-bold mb-4">Contact</h3>
                 <ul className="space-y-2">
-                  <li><a href="mailto:support@kingdomkids.com" className="text-muted-foreground hover:text-foreground">Email Us</a></li>
-                  <li><a href="#" className="text-muted-foreground hover:text-foreground">Support</a></li>
+                  <li><div className="text-muted-foreground hover:text-foreground cursor-pointer" onClick={() => window.location.href = 'mailto:support@kingdomkids.com'}>Email Us</div></li>
+                  <li><div className="text-muted-foreground hover:text-foreground cursor-pointer">Support</div></li>
                 </ul>
               </div>
             </div>
