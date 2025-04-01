@@ -6,17 +6,25 @@ import { Label } from "@/components/ui/label";
 import { Mail, Lock } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema, type LoginData } from "@shared/schema";
+import { z } from "zod";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { useLocation } from "wouter";
-import Logo from "../ui/logo";
+import Logo from "@/components/ui/logo"; // updated path
+
+// 🧠 Define the login schema locally
+const loginSchema = z.object({
+  username: z.string().min(1, "Username is required"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
+});
+
+type LoginData = z.infer<typeof loginSchema>;
 
 const LoginForm = () => {
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [, setLocation] = useLocation();
-  
+
   const {
     register,
     handleSubmit,
@@ -33,7 +41,7 @@ const LoginForm = () => {
     try {
       setLoading(true);
       const response = await apiRequest("POST", "/api/auth/login", data);
-      
+
       if (response.ok) {
         toast({
           title: "Login successful",
@@ -61,12 +69,10 @@ const LoginForm = () => {
             "Jesus said, 'Let the little children come to me'" - Matthew 19:14
           </p>
         </div>
-        
+
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="username" className="text-sm font-medium">
-              Username
-            </Label>
+            <Label htmlFor="username">Username</Label>
             <div className="relative">
               <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
@@ -80,11 +86,9 @@ const LoginForm = () => {
               <p className="text-destructive text-sm">{errors.username.message}</p>
             )}
           </div>
-          
+
           <div className="space-y-2">
-            <Label htmlFor="password" className="text-sm font-medium">
-              Password
-            </Label>
+            <Label htmlFor="password">Password</Label>
             <div className="relative">
               <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
@@ -99,7 +103,7 @@ const LoginForm = () => {
               <p className="text-destructive text-sm">{errors.password.message}</p>
             )}
           </div>
-          
+
           <Button 
             type="submit" 
             className="w-full bg-primary text-primary-foreground"
@@ -108,7 +112,7 @@ const LoginForm = () => {
             {loading ? "Signing in..." : "Sign In"}
           </Button>
         </form>
-        
+
         <div className="mt-6 text-center">
           <p className="text-sm text-muted-foreground">
             Don't have an account?{" "}
@@ -117,7 +121,7 @@ const LoginForm = () => {
             </Button>
           </p>
         </div>
-        
+
         <p className="mt-6 text-center text-sm text-muted-foreground">
           Teaching children about Jesus Christ, <br />
           the Way, the Truth, and the Life
