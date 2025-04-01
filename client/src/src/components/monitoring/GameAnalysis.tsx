@@ -3,61 +3,57 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { 
-  AlertCircle, 
-  CheckCircle, 
-  Clock, 
-  ThumbsDown, 
-  GamepadIcon, 
-  Filter, 
-  BarChart
+import {
+  AlertCircle,
+  CheckCircle,
+  Clock,
+  ThumbsDown,
+  GamepadIcon,
+  Filter
 } from "lucide-react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import { GameMonitoring } from "@shared/schema";
 import { Skeleton } from "@/components/ui/skeleton";
+import { GameMonitoring } from "@/types/game";
 
 const GameAnalysis: React.FC = () => {
   const { toast } = useToast();
   const [selectedGame, setSelectedGame] = useState<GameMonitoring | null>(null);
-  
-  // Fetch games data
+
   const { data: games, isLoading } = useQuery<GameMonitoring[]>({
-    queryKey: ['/api/games/monitoring'],
+    queryKey: ["/api/games/monitoring"]
   });
-  
-  // Approve/deny game mutation
+
   const approvalMutation = useMutation({
     mutationFn: async ({ id, approved }: { id: number; approved: boolean }) => {
       return apiRequest("PUT", `/api/games/monitoring/${id}`, { approved });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['/api/games/monitoring'] });
+      queryClient.invalidateQueries({ queryKey: ["/api/games/monitoring"] });
       toast({
         title: "Game updated",
-        description: "Game approval status has been updated",
+        description: "Game approval status has been updated"
       });
     },
     onError: (error) => {
       toast({
         title: "Error updating game",
         description: error instanceof Error ? error.message : "An unknown error occurred",
-        variant: "destructive",
+        variant: "destructive"
       });
-    },
+    }
   });
-  
+
   const handleApproval = (id: number, approved: boolean) => {
     approvalMutation.mutate({ id, approved });
   };
-  
+
   const renderGameDetails = () => {
     if (!selectedGame) return null;
-    
-    // Parse red flags if they exist
-    const redFlags = selectedGame.redFlags as { type: string; description: string }[] || [];
-    
+
+    const redFlags = selectedGame.redFlags || [];
+
     return (
       <Card>
         <CardContent className="p-6">
@@ -66,29 +62,35 @@ const GameAnalysis: React.FC = () => {
               <h3 className="text-2xl font-bold mb-1">{selectedGame.gameName}</h3>
               <div className="flex items-center space-x-2">
                 <Badge variant="outline">{selectedGame.contentRating || "Not Rated"}</Badge>
-                <Badge 
+                <Badge
                   variant={
-                    selectedGame.approved === true ? "success" :
-                    selectedGame.approved === false ? "destructive" : "secondary"
+                    selectedGame.approved === true
+                      ? "default"
+                      : selectedGame.approved === false
+                      ? "destructive"
+                      : "secondary"
                   }
                 >
-                  {selectedGame.approved === true ? "Approved" :
-                   selectedGame.approved === false ? "Blocked" : "Pending Review"}
+                  {selectedGame.approved === true
+                    ? "Approved"
+                    : selectedGame.approved === false
+                    ? "Blocked"
+                    : "Pending Review"}
                 </Badge>
               </div>
             </div>
-            
+
             <div className="mt-4 md:mt-0 flex items-center space-x-4">
-              <Button 
-                variant="default" 
+              <Button
+                variant="default"
                 onClick={() => handleApproval(selectedGame.id, true)}
                 disabled={selectedGame.approved === true}
               >
                 <CheckCircle className="mr-2 h-4 w-4" />
                 Approve
               </Button>
-              <Button 
-                variant="destructive" 
+              <Button
+                variant="destructive"
                 onClick={() => handleApproval(selectedGame.id, false)}
                 disabled={selectedGame.approved === false}
               >
@@ -97,7 +99,7 @@ const GameAnalysis: React.FC = () => {
               </Button>
             </div>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
             <Card>
               <CardContent className="p-4 flex items-center space-x-4">
@@ -112,7 +114,7 @@ const GameAnalysis: React.FC = () => {
                 </div>
               </CardContent>
             </Card>
-            
+
             <Card>
               <CardContent className="p-4 flex items-center space-x-4">
                 <div className="rounded-full bg-yellow-500/20 p-3">
@@ -124,7 +126,7 @@ const GameAnalysis: React.FC = () => {
                 </div>
               </CardContent>
             </Card>
-            
+
             <Card>
               <CardContent className="p-4 flex items-center space-x-4">
                 <div className="rounded-full bg-blue-500/20 p-3">
@@ -133,51 +135,17 @@ const GameAnalysis: React.FC = () => {
                 <div>
                   <p className="text-sm text-muted-foreground">Last Played</p>
                   <h4 className="text-sm font-medium">
-                    {selectedGame.lastPlayed ? 
-                      new Date(selectedGame.lastPlayed).toLocaleDateString() : 
-                      "Never"}
+                    {selectedGame.lastPlayed ? new Date(selectedGame.lastPlayed).toLocaleDateString() : "Never"}
                   </h4>
                 </div>
               </CardContent>
             </Card>
           </div>
-          
-          <div className="mb-6">
-            <h4 className="font-semibold mb-3">Content Analysis</h4>
-            {redFlags.length > 0 ? (
-              <div className="space-y-3">
-                {redFlags.map((flag, index) => (
-                  <div key={index} className="flex items-start space-x-3 p-3 border rounded-md bg-red-500/10">
-                    <AlertCircle className="h-5 w-5 text-red-500 mt-0.5" />
-                    <div>
-                      <h5 className="font-medium">{flag.type}</h5>
-                      <p className="text-sm text-muted-foreground">{flag.description}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p className="text-sm text-muted-foreground">No content issues detected.</p>
-            )}
-          </div>
-          
-          <div>
-            <h4 className="font-semibold mb-3">Biblical Discussion Points</h4>
-            <div className="p-4 border rounded-md bg-muted/20">
-              <p className="text-sm mb-2">Here are some conversation starters if your child plays this game:</p>
-              <ul className="list-disc list-inside text-sm space-y-2 text-muted-foreground">
-                <li>How do the characters in this game solve problems? What would Jesus do?</li>
-                <li>Does this game have characters making choices? Are they good or bad choices?</li>
-                <li>What Bible verse might help guide decisions in situations like this game?</li>
-                <li>How could you show God's love while playing online with others?</li>
-              </ul>
-            </div>
-          </div>
         </CardContent>
       </Card>
     );
   };
-  
+
   return (
     <div className="space-y-6">
       <div>
@@ -186,7 +154,7 @@ const GameAnalysis: React.FC = () => {
         </h2>
         <p className="text-muted-foreground">Review and manage your child's game content</p>
       </div>
-      
+
       <Tabs defaultValue="pending">
         <TabsList className="mb-4">
           <TabsTrigger value="pending" className="flex items-center">
@@ -206,7 +174,7 @@ const GameAnalysis: React.FC = () => {
             All Games
           </TabsTrigger>
         </TabsList>
-        
+
         {["pending", "approved", "blocked", "all"].map((tab) => (
           <TabsContent key={tab} value={tab}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
@@ -230,15 +198,18 @@ const GameAnalysis: React.FC = () => {
                 ))
               ) : games && games.length > 0 ? (
                 games
-                  .filter(game => 
-                    tab === "all" ? true : 
-                    tab === "pending" ? game.approved === null :
-                    tab === "approved" ? game.approved === true :
-                    game.approved === false
+                  .filter((game) =>
+                    tab === "all"
+                      ? true
+                      : tab === "pending"
+                      ? game.approved === null
+                      : tab === "approved"
+                      ? game.approved === true
+                      : game.approved === false
                   )
-                  .map(game => (
-                    <Card 
-                      key={game.id} 
+                  .map((game) => (
+                    <Card
+                      key={game.id}
                       className={`cursor-pointer hover:border-primary transition-colors ${
                         selectedGame?.id === game.id ? "border-primary" : ""
                       }`}
@@ -250,19 +221,15 @@ const GameAnalysis: React.FC = () => {
                             <h3 className="font-semibold">{game.gameName}</h3>
                             <div className="flex space-x-2 mt-1">
                               <Badge variant="outline">{game.contentRating || "Not Rated"}</Badge>
-                              {game.approved === true && <Badge variant="success">Approved</Badge>}
+                              {game.approved === true && <Badge variant="default">Approved</Badge>}
                               {game.approved === false && <Badge variant="destructive">Blocked</Badge>}
                               {game.approved === null && <Badge>Pending</Badge>}
                             </div>
                           </div>
-                          <Button 
-                            size="sm" 
-                            variant="outline"
-                          >
+                          <Button size="sm" variant="outline">
                             View
                           </Button>
                         </div>
-                        
                         <div className="mt-3">
                           <div className="flex justify-between text-sm text-muted-foreground">
                             <span>
@@ -270,7 +237,7 @@ const GameAnalysis: React.FC = () => {
                               {Math.floor(game.screenTime / 60)}h {game.screenTime % 60}m played
                             </span>
                             <span>
-                              {game.redFlags && Array.isArray(game.redFlags) && game.redFlags.length > 0 ? (
+                              {Array.isArray(game.redFlags) && game.redFlags.length > 0 ? (
                                 <span className="text-red-500">
                                   <AlertCircle className="h-4 w-4 inline mr-1" />
                                   {game.redFlags.length} issues
@@ -294,17 +261,19 @@ const GameAnalysis: React.FC = () => {
                       <GamepadIcon className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
                       <h3 className="text-xl font-medium mb-2">No games found</h3>
                       <p className="text-muted-foreground">
-                        {tab === "pending" ? "No games pending review" :
-                         tab === "approved" ? "No approved games yet" :
-                         tab === "blocked" ? "No blocked games" :
-                         "No games detected yet"}
+                        {tab === "pending"
+                          ? "No games pending review"
+                          : tab === "approved"
+                          ? "No approved games yet"
+                          : tab === "blocked"
+                          ? "No blocked games"
+                          : "No games detected yet"}
                       </p>
                     </CardContent>
                   </Card>
                 </div>
               )}
             </div>
-            
             {selectedGame && renderGameDetails()}
           </TabsContent>
         ))}

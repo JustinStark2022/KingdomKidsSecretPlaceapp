@@ -1,20 +1,19 @@
 import { Button } from "@/components/ui/button";
 import React from "react";
 import { cn } from "@/lib/utils";
-import { Link } from "wouter";
-import { useLocation } from "wouter";
+import { Link, useLocation } from "wouter";
 import { X } from "lucide-react";
-import Logo from "../ui/logo";
-import { 
-  Home, 
-  Shield, 
-  BookOpen, 
-  MessageSquare, 
-  GraduationCap, 
-  Settings, 
-  HelpCircle, 
+import Logo from "@/components/ui/logo";
+import {
+  Home,
+  Shield,
+  BookOpen,
+  MessageSquare,
+  GraduationCap,
+  Settings,
+  HelpCircle,
   Activity,
-  Calendar
+  Calendar,
 } from "lucide-react";
 
 interface SidebarProps {
@@ -24,7 +23,7 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ open, onClose }) => {
   const [location] = useLocation();
-  
+
   const links = [
     { href: "/", label: "Home", icon: <Home className="h-5 w-5" /> },
     { href: "/dashboard", label: "Dashboard", icon: <Activity className="h-5 w-5" /> },
@@ -34,10 +33,9 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onClose }) => {
     { href: "/devotionals", label: "Devotionals", icon: <Calendar className="h-5 w-5" /> },
     { href: "/lessons", label: "Bible Lessons", icon: <GraduationCap className="h-5 w-5" /> },
     { href: "/settings", label: "Settings", icon: <Settings className="h-5 w-5" /> },
-    { href: "/about", label: "Help & Support", icon: <HelpCircle className="h-5 w-5" /> }
+    { href: "/about", label: "Help & Support", icon: <HelpCircle className="h-5 w-5" /> },
   ];
 
-  // Mobile sidebar (overlay)
   const mobileSidebar = (
     <div
       className={cn(
@@ -45,12 +43,8 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onClose }) => {
         open ? "translate-x-0" : "-translate-x-full"
       )}
     >
-      <div 
-        className="absolute inset-0 bg-black/50" 
-        onClick={onClose}
-      />
-      
-      <div className="absolute inset-y-0 left-0 w-64 bg-sidebar shadow-lg transform transition-transform duration-300 ease-in-out">
+      <div className="absolute inset-0 bg-black/50" onClick={onClose} />
+      <div className="absolute inset-y-0 left-0 w-64 bg-sidebar shadow-lg">
         <div className="p-4 border-b border-sidebar-border flex items-center justify-between">
           <Logo size="small" />
           <Button
@@ -62,7 +56,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onClose }) => {
             <X className="h-5 w-5" />
           </Button>
         </div>
-        
+
         <nav className="p-4">
           <ul className="space-y-2">
             {links.map((link) => (
@@ -71,8 +65,8 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onClose }) => {
                   <div
                     className={cn(
                       "flex items-center space-x-3 p-2 rounded-lg cursor-pointer",
-                      location === link.href 
-                        ? "bg-sidebar-accent text-primary" 
+                      location === link.href
+                        ? "bg-sidebar-accent text-primary"
                         : "hover:bg-sidebar-accent/50 text-sidebar-foreground"
                     )}
                     onClick={onClose}
@@ -89,35 +83,32 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onClose }) => {
     </div>
   );
 
-  // Desktop sidebar
   const desktopSidebar = (
     <aside className="hidden md:block w-64 bg-sidebar border-r border-sidebar-border">
       <nav className="p-4">
         <ul className="space-y-2">
-          {links.map((link, index) => {
-            return (
-              <div key={link.href}>
-                {index === 7 && ( // Add divider before Settings
-                  <li className="pt-4 border-t border-sidebar-border mt-4"></li>
-                )}
-                <li>
-                  <Link href={link.href}>
-                    <div
-                      className={cn(
-                        "flex items-center space-x-3 p-2 rounded-lg cursor-pointer",
-                        location === link.href 
-                          ? "bg-sidebar-accent text-primary" 
-                          : "hover:bg-sidebar-accent/50 text-sidebar-foreground"
-                      )}
-                    >
-                      {link.icon}
-                      <span>{link.label}</span>
-                    </div>
-                  </Link>
-                </li>
-              </div>
-            );
-          })}
+          {links.map((link, index) => (
+            <React.Fragment key={link.href}>
+              {index === 7 && (
+                <li className="pt-4 border-t border-sidebar-border mt-4" />
+              )}
+              <li>
+                <Link href={link.href}>
+                  <div
+                    className={cn(
+                      "flex items-center space-x-3 p-2 rounded-lg cursor-pointer",
+                      location === link.href
+                        ? "bg-sidebar-accent text-primary"
+                        : "hover:bg-sidebar-accent/50 text-sidebar-foreground"
+                    )}
+                  >
+                    {link.icon}
+                    <span>{link.label}</span>
+                  </div>
+                </Link>
+              </li>
+            </React.Fragment>
+          ))}
         </ul>
       </nav>
     </aside>
@@ -132,3 +123,4 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onClose }) => {
 };
 
 export default Sidebar;
+

@@ -3,14 +3,14 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { 
-  MessageSquare, 
-  AlertTriangle, 
-  Shield, 
-  Users, 
-  Calendar, 
+import {
+  MessageSquare,
+  AlertTriangle,
+  Shield,
+  Users,
+  Calendar,
   Search,
-  Flag
+  Flag,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useQuery } from "@tanstack/react-query";
@@ -18,58 +18,51 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { format } from "date-fns";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
-
-type ChatLog = {
-  id: number;
-  childId: number;
-  childName: string;
-  platform: string;
-  content: string;
-  flagged: boolean;
-  flagReason?: string;
-  timestamp: string;
-  participants: string[];
-};
+import { ChatLog } from "@/types/chat";
 
 const ChatMonitoring: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedChat, setSelectedChat] = useState<ChatLog | null>(null);
-  
-  // Fetch chat logs
+
   const { data: chatLogs, isLoading } = useQuery<ChatLog[]>({
-    queryKey: ['/api/monitoring/chats'],
+    queryKey: ["/api/monitoring/chats"],
   });
-  
-  const filteredChats = chatLogs?.filter(chat => 
-    chat.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    chat.platform.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    chat.participants.some(p => p.toLowerCase().includes(searchQuery.toLowerCase()))
+
+  const filteredChats = chatLogs?.filter(
+    (chat) =>
+      chat.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      chat.platform.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      chat.participants.some((p) =>
+        p.toLowerCase().includes(searchQuery.toLowerCase())
+      )
   );
-  
-  const flaggedChats = chatLogs?.filter(chat => chat.flagged);
-  const unflaggedChats = chatLogs?.filter(chat => !chat.flagged);
-  
+
+  const flaggedChats = chatLogs?.filter((chat) => chat.flagged);
+  const unflaggedChats = chatLogs?.filter((chat) => !chat.flagged);
+
   const renderChatList = (chats?: ChatLog[]) => {
     if (isLoading) {
-      return Array(5).fill(null).map((_, i) => (
-        <Card key={i} className="mb-4">
-          <CardContent className="p-4">
-            <div className="flex justify-between items-start">
-              <div className="space-y-2">
-                <Skeleton className="h-5 w-40" />
-                <Skeleton className="h-4 w-24" />
+      return Array(5)
+        .fill(null)
+        .map((_, i) => (
+          <Card key={i} className="mb-4">
+            <CardContent className="p-4">
+              <div className="flex justify-between items-start">
+                <div className="space-y-2">
+                  <Skeleton className="h-5 w-40" />
+                  <Skeleton className="h-4 w-24" />
+                </div>
+                <Skeleton className="h-6 w-16" />
               </div>
-              <Skeleton className="h-6 w-16" />
-            </div>
-            <div className="mt-3">
-              <Skeleton className="h-4 w-full" />
-              <Skeleton className="h-4 w-3/4 mt-2" />
-            </div>
-          </CardContent>
-        </Card>
-      ));
+              <div className="mt-3">
+                <Skeleton className="h-4 w-full" />
+                <Skeleton className="h-4 w-3/4 mt-2" />
+              </div>
+            </CardContent>
+          </Card>
+        ));
     }
-    
+
     if (!chats || chats.length === 0) {
       return (
         <Card>
@@ -83,10 +76,10 @@ const ChatMonitoring: React.FC = () => {
         </Card>
       );
     }
-    
+
     return chats.map((chat) => (
-      <Card 
-        key={chat.id} 
+      <Card
+        key={chat.id}
         className={`mb-4 cursor-pointer hover:border-primary transition-colors ${
           selectedChat?.id === chat.id ? "border-primary" : ""
         }`}
@@ -107,13 +100,13 @@ const ChatMonitoring: React.FC = () => {
                 {format(new Date(chat.timestamp), "MMM d, yyyy 'at' h:mm a")}
               </p>
             </div>
-            <Badge variant="outline" className="capitalize">{chat.participants.length} {chat.participants.length === 1 ? 'person' : 'people'}</Badge>
+            <Badge variant="outline" className="capitalize">
+              {chat.participants.length} {chat.participants.length === 1 ? "person" : "people"}
+            </Badge>
           </div>
-          
+
           <div className="mt-3">
-            <p className="text-sm line-clamp-2">
-              {chat.content}
-            </p>
+            <p className="text-sm line-clamp-2">{chat.content}</p>
             <div className="flex items-center text-xs text-muted-foreground mt-2">
               <Users className="h-3 w-3 mr-1" />
               <span>{chat.participants.join(", ")}</span>
@@ -123,10 +116,10 @@ const ChatMonitoring: React.FC = () => {
       </Card>
     ));
   };
-  
+
   const renderChatDetail = () => {
     if (!selectedChat) return null;
-    
+
     return (
       <Card>
         <CardContent className="p-6">
@@ -145,16 +138,11 @@ const ChatMonitoring: React.FC = () => {
                 {format(new Date(selectedChat.timestamp), "MMMM d, yyyy 'at' h:mm a")}
               </p>
             </div>
-            
-            <Button 
-              variant="outline" 
-              size="sm"
-              onClick={() => setSelectedChat(null)}
-            >
+            <Button variant="outline" size="sm" onClick={() => setSelectedChat(null)}>
               Close
             </Button>
           </div>
-          
+
           <div className="mb-4">
             <div className="flex items-center space-x-3 mb-2">
               <Users className="h-4 w-4 text-muted-foreground" />
@@ -168,14 +156,12 @@ const ChatMonitoring: React.FC = () => {
               ))}
             </div>
           </div>
-          
+
           <div className="mb-6 p-4 border rounded-md bg-muted/10">
             <h4 className="font-medium mb-2">Conversation Content</h4>
-            <p className="whitespace-pre-line">
-              {selectedChat.content}
-            </p>
+            <p className="whitespace-pre-line">{selectedChat.content}</p>
           </div>
-          
+
           {selectedChat.flagged && selectedChat.flagReason && (
             <div className="mb-6 p-4 border border-red-300 rounded-md bg-red-50 dark:bg-red-900/10 dark:border-red-900">
               <div className="flex items-center text-red-800 dark:text-red-300 mb-2">
@@ -187,71 +173,67 @@ const ChatMonitoring: React.FC = () => {
               </p>
             </div>
           )}
-          
+
           <div className="flex justify-between">
             <Button variant="outline" className="text-red-500">
               <Flag className="mr-2 h-4 w-4" />
               Flag as Inappropriate
             </Button>
-            
             <div className="space-x-2">
               <Button variant="outline">
                 <Shield className="mr-2 h-4 w-4" />
                 Block User
               </Button>
-              <Button variant="default">
-                Take Action
-              </Button>
+              <Button variant="default">Take Action</Button>
             </div>
           </div>
         </CardContent>
       </Card>
     );
   };
-  
+
   return (
     <div className="space-y-6">
       <div>
         <h2 className="text-2xl font-bold mb-2">
           <span className="text-primary neon-text">Chat Monitoring</span>
         </h2>
-        <p className="text-muted-foreground">Review and monitor your child's chat conversations</p>
+        <p className="text-muted-foreground">
+          Review and monitor your child's chat conversations
+        </p>
       </div>
-      
+
       <Card>
         <CardContent className="p-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="space-y-4">
               <h3 className="font-semibold">Monitoring Settings</h3>
-              
               <div className="flex items-center space-x-2">
                 <Switch id="ai-monitoring" defaultChecked />
                 <Label htmlFor="ai-monitoring">AI Content Monitoring</Label>
               </div>
-              
               <div className="flex items-center space-x-2">
                 <Switch id="keyword-alerts" defaultChecked />
                 <Label htmlFor="keyword-alerts">Keyword Alerts</Label>
               </div>
-              
               <div className="flex items-center space-x-2">
                 <Switch id="unknown-contacts" defaultChecked />
                 <Label htmlFor="unknown-contacts">Unknown Contact Alerts</Label>
               </div>
             </div>
-            
+
             <div className="md:col-span-2 space-y-4">
               <h3 className="font-semibold">Monitoring Summary</h3>
-              
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="bg-green-500/10 p-3 rounded-md border border-green-200 dark:border-green-900">
                   <h4 className="font-medium text-green-700 dark:text-green-400 flex items-center">
                     <Shield className="h-4 w-4 mr-2" />
                     Protected
                   </h4>
-                  <p className="text-sm text-muted-foreground mt-1">Active monitoring enabled</p>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Active monitoring enabled
+                  </p>
                 </div>
-                
                 <div className="bg-yellow-500/10 p-3 rounded-md border border-yellow-200 dark:border-yellow-900">
                   <h4 className="font-medium text-yellow-700 dark:text-yellow-400 flex items-center">
                     <Calendar className="h-4 w-4 mr-2" />
@@ -259,14 +241,15 @@ const ChatMonitoring: React.FC = () => {
                   </h4>
                   <p className="text-sm text-muted-foreground mt-1">Today, 2:45 PM</p>
                 </div>
-                
                 <div className="bg-red-500/10 p-3 rounded-md border border-red-200 dark:border-red-900">
                   <h4 className="font-medium text-red-700 dark:text-red-400 flex items-center">
                     <AlertTriangle className="h-4 w-4 mr-2" />
                     Flags
                   </h4>
                   <p className="text-sm text-muted-foreground mt-1">
-                    {isLoading ? "Loading..." : `${flaggedChats?.length || 0} flagged conversations`}
+                    {isLoading
+                      ? "Loading..."
+                      : `${flaggedChats?.length || 0} flagged conversations`}
                   </p>
                 </div>
               </div>
@@ -274,7 +257,7 @@ const ChatMonitoring: React.FC = () => {
           </div>
         </CardContent>
       </Card>
-      
+
       <div className="relative mb-4">
         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
         <Input
@@ -285,7 +268,7 @@ const ChatMonitoring: React.FC = () => {
           onChange={(e) => setSearchQuery(e.target.value)}
         />
       </div>
-      
+
       <Tabs defaultValue="all">
         <TabsList className="mb-4">
           <TabsTrigger value="all">All Chats</TabsTrigger>
@@ -299,22 +282,20 @@ const ChatMonitoring: React.FC = () => {
           </TabsTrigger>
           <TabsTrigger value="safe">Safe Chats</TabsTrigger>
         </TabsList>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-4">
             <TabsContent value="all" className="mt-0">
               {renderChatList(filteredChats)}
             </TabsContent>
-            
             <TabsContent value="flagged" className="mt-0">
               {renderChatList(flaggedChats)}
             </TabsContent>
-            
             <TabsContent value="safe" className="mt-0">
               {renderChatList(unflaggedChats)}
             </TabsContent>
           </div>
-          
+
           <div className="space-y-4">
             {selectedChat ? (
               renderChatDetail()
