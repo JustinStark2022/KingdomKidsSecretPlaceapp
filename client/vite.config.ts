@@ -7,7 +7,13 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-export default defineConfig({
+export default defineConfig(
+    server: {
+        proxy: {
+            '/api': 'http://localhost:5000'
+        }
+    },
+    
   plugins: [react()],
   resolve: {
     alias: {

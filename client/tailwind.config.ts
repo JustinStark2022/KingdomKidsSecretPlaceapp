@@ -4,11 +4,7 @@ import typography from "@tailwindcss/typography";
 
 const config: Config = {
   darkMode: ["class"],
-  content: [
-    "./client/index.html",
-    "./client/src/**/*.{js,ts,jsx,tsx}",
-    "./flaskbackend/templates/**/*.html" // Include Flask Jinja2 templates
-  ],
+  content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       borderRadius: {
