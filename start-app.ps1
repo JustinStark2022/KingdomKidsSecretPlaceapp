@@ -2,7 +2,7 @@ Write-Host "Starting full-stack setup..."
 
 # ---- SETUP BACKEND ----
 Write-Host "Setting up Flask backend..."
-Set-Location flask-backend
+Set-Location flask_backend
 
 # Create venv if not exists
 if (!(Test-Path -Path "venv")) {
@@ -31,9 +31,14 @@ Write-Host "Frontend dependencies installed."
 Set-Location ..
 
 Write-Host "`nAll dependencies installed!"
+
+# ✅ UPDATED startup instructions
 Write-Host "`nTo start backend:"
-Write-Host "   cd flask-backend; .\venv\Scripts\Activate.ps1; python app.py"
+Write-Host "   cd flask_backend; .\venv\Scripts\Activate.ps1; python -m flask_backend.app"
+
 Write-Host "`nTo start frontend:"
 Write-Host "   cd client; npm run dev"
+
 Write-Host "`nYou're ready to develop!"
+
 
