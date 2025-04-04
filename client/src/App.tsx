@@ -13,10 +13,11 @@ import Monitoring from "./pages/Monitoring";
 import Settings from "./pages/Settings";
 import About from "./pages/About";
 import NotFound from "@/pages/not-found";
+import { UserProvider } from "./context/UserContext";
 
 function App() {
   return (
-    <>
+    <UserProvider>
       <Switch>
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
@@ -38,8 +39,9 @@ function App() {
         </Route>
       </Switch>
       <Toaster />
-    </>
+    </UserProvider>
   );
 }
 
 export default App;
+
