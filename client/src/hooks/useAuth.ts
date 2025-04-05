@@ -18,8 +18,9 @@ export const useAuth = () => {
   const login = async (credentials: any) => {
     try {
       const res = await axios.post("/api/auth/login", credentials);
-      setCurrentUser(res.data.user);
-      return { success: true };
+      const user = res.data.user;
+      setCurrentUser(user);
+      return { success: true, user }; // ✅ return user here
     } catch (err) {
       return { success: false, error: err };
     }
@@ -36,3 +37,5 @@ export const useAuth = () => {
 
   return { currentUser, login, signup, loading };
 };
+
+export default useAuth;

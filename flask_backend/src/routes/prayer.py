@@ -1,6 +1,6 @@
 # flask-backend/src/routes/prayer.py
 from flask import Blueprint, request, jsonify, session
-from flask_backend.src.storage import prayer_entries_db, generate_id
+from src.storage import prayer_entries_db, generate_id
 
 prayer_bp = Blueprint('prayer', __name__)
 

@@ -28,8 +28,11 @@ Write-Host "Setting up Vite React frontend..."
 $FrontendPath = Join-Path $ProjectRoot "client"
 Set-Location $FrontendPath
 
-# OPTIONAL: Auto-fix incorrect @shadcn/ui version
-(Get-Content package.json) -replace '"@shadcn/ui": "\^0.0.1"', '"@shadcn/ui": "^0.6.0"' | Set-Content package.json
+# OPTIONAL: Auto-remove broken @shadcn/ui-tailwind and fix @shadcn/ui version
+(Get-Content package.json) `
+    -replace '"@shadcn/ui-tailwind":\s*"\^0.0.1",?', "" `
+    -replace '"@shadcn/ui":\s*"\^0.0.1"', '"@shadcn/ui": "latest"' `
+    | Set-Content package.json
 
 npm install
 Write-Host "Frontend dependencies installed."
@@ -37,8 +40,9 @@ Write-Host "Frontend dependencies installed."
 Set-Location $ProjectRoot
 
 Write-Host "`nAll dependencies installed!"
+
 Write-Host "`nTo start backend:"
-Write-Host "   .\flask_backend\venv\Scripts\Activate.ps1; python -m flask_backend.app"
+Write-Host "   cd flask_backend; .\venv\Scripts\Activate.ps1; python app.py"
 
 Write-Host "`nTo start frontend:"
 Write-Host "   cd client; npm run dev"

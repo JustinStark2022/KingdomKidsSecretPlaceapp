@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify, session
-from flask_backend.src.storage import users_db, generate_id
+from src.storage import users_db, generate_id
 
 auth_bp = Blueprint('auth', __name__)
 

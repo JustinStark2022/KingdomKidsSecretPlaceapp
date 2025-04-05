@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, session
-from flask_backend.src.storage import alerts_db
+from src.storage import alerts_db
 
 alerts_bp = Blueprint('alerts', __name__)
 

@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from flask_backend.src.storage import game_monitoring_db
+from src.storage import game_monitoring_db
 
 games_bp = Blueprint('games', __name__)
 

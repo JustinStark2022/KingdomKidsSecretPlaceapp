@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify, session
-from flask_backend.src.storage import users_db, generate_id
+from src.storage import users_db, generate_id
 
 settings_bp = Blueprint('settings', __name__)
 

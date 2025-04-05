@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, session
-from flask_backend.src.storage import users_db
+from src.storage import users_db
 
 users_bp = Blueprint('users', __name__)
 

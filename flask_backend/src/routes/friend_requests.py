@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request, session
-from flask_backend.src.storage import friend_requests_db
+from src.storage import friend_requests_db
 
 friend_requests_bp = Blueprint('friend_requests', __name__)
 

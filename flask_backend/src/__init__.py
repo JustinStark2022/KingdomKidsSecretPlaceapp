@@ -1,17 +1,19 @@
 from flask import Flask, send_from_directory
 from flask_cors import CORS
 import os
+from config import Config
 
 def create_app():
     app = Flask(__name__, static_folder="../client/dist", static_url_path="/")
-    app.secret_key = 'supersecretkey'
+    app.config.from_object(Config)
+    app.secret_key = app.config["SECRET_KEY"]
     CORS(app, supports_credentials=True)
 
-    from flask_backend.src.routes import (
-        auth, users, prayer, bible, alerts,
-        friend_requests, games, monitoring,
-        lessons, notifications, settings
-    )
+    from src.routes import (
+    auth, users, prayer, bible, alerts,
+    friend_requests, games, monitoring,
+    lessons, notifications, settings
+)
 
     app.register_blueprint(auth.auth_bp)
     app.register_blueprint(users.users_bp)
@@ -28,9 +30,9 @@ def create_app():
     @app.route("/", defaults={"path": ""})
     @app.route("/<path:path>")
     def serve(path):
-        if path != "" and os.path.exists(app.static_folder + '/' + path):
+        file_path = os.path.join(app.static_folder, path)
+        if path != "" and os.path.exists(file_path):
             return send_from_directory(app.static_folder, path)
-        else:
-            return send_from_directory(app.static_folder, 'index.html')
+        return send_from_directory(app.static_folder, "index.html")
 
     return app

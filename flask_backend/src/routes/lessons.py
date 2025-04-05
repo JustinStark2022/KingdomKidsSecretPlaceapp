@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify
-from flask_backend.src.storage import lessons_db, user_lesson_progress_db
+from src.storage import lessons_db, user_lesson_progress_db
 from flask import session
 
 lessons_bp = Blueprint('lessons', __name__)

@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify
-from flask_backend.src.storage import chat_logs_db
+from src.storage import chat_logs_db
 
 monitoring_bp = Blueprint('monitoring', __name__)
 
