@@ -27,7 +27,6 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onClose }) => {
   const links = [
     { href: "/", label: "Home", icon: <Home className="h-5 w-5" /> },
     { href: "/dashboard", label: "Dashboard", icon: <Activity className="h-5 w-5" /> },
-    { href: "/monitoring", label: "Parental Controls", icon: <Shield className="h-5 w-5" /> },
     { href: "/bible", label: "Bible Reader", icon: <BookOpen className="h-5 w-5" /> },
     { href: "/prayer", label: "Prayer Journal", icon: <MessageSquare className="h-5 w-5" /> },
     { href: "/devotionals", label: "Devotionals", icon: <Calendar className="h-5 w-5" /> },
