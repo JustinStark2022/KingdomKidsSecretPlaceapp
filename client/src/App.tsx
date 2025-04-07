@@ -30,7 +30,6 @@ function App() {
               <Route path="/prayer" component={Prayer} />
               <Route path="/devotionals" component={Devotionals} />
               <Route path="/lessons" component={Lessons} />
-              <Route path="/monitoring" component={Monitoring} />
               <Route path="/settings" component={Settings} />
               <Route path="/about" component={About} />
               <Route component={NotFound} />
