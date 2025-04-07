@@ -5,7 +5,6 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useQuery } from "@tanstack/react-query";
-import { BibleLesson, UserLessonProgress } from "@shared/schema";
 import { Skeleton } from "@/components/ui/skeleton";
 import { 
   GraduationCap, 

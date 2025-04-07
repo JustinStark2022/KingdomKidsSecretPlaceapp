@@ -3,6 +3,7 @@ from flask_cors import CORS
 import os
 from config import Config
 
+
 def create_app():
     app = Flask(__name__, static_folder="../client/dist", static_url_path="/")
     app.config.from_object(Config)

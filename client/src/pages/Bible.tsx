@@ -5,7 +5,7 @@ import ScriptureMemorization from "@/components/scripture/ScriptureMemorization"
 import PrayerJournal from "@/components/scripture/PrayerJournal";
 import { BookOpen, Star, BookHeart } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
-import { User } from "@shared/schema";
+import { User } from "@/types/user";
 
 const Bible: React.FC = () => {
   // Fetch current user to determine if they're a parent or child
