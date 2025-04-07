@@ -37,34 +37,34 @@ const About: React.FC = () => {
       </div>
       
       <Card className="overflow-hidden shadow-md">
-        <CardContent className="p-6">
-          <div className="flex flex-col md:flex-row items-start gap-6">
-            <div className="flex-shrink-0 flex flex-col">
-              <Logo size="large" />
-              <div className="max-w-md mt-6 p-6 border border-primary/40 rounded-md bg-primary/5 neon-border shadow-lg">
+      <CardContent className="p-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="flex flex-col w-full">
+              <h2 className="text-xl font-bold text-primary neon-text mb-4 text-center">Kingdom Kids Faith Declaration</h2>
+              <div className="p-4 border border-primary/40 rounded-md bg-primary/5 neon-border shadow-lg max-w-prose mx-auto">
                 <p className="text-sm scripture-heading leading-relaxed text-foreground">
-                  <span className="font-bold high-contrast-text text-primary neon-text">Because you dwell in the secret place of the Most High,</span><br/>
-                  you shall abide under the shadow of the Almighty.<br/>
-                  I will say of the Lord, He is your refuge and your fortress,<br/>
-                  your God, in Him shall you trust all the days of your life.<br/>
-                  Surely, He shall deliver you from the snare of the fowler<br/>
-                  and from the noisome pestilence.<br/>
-                  <span className="font-bold high-contrast-text text-primary neon-text">You are always safe, always blessed,</span><br/>
-                  always the head and not the tail, more than a conqueror.<br/>
-                  You walk like, talk like, and act like Jesus.<br/>
-                  You are show stock, offspring of God our Father.<br/>
-                  You shall live to be 120 years old, full of God,<br/>
-                  full of grace, full of all that you need<br/>
-                  spirit, body, and soul,<br/>
-                  <span className="font-bold high-contrast-text text-primary neon-text">in the Name of Jesus Christ, your Lord and Savior!</span>
+                Because you dwell in the secret place of the Most High,<br />
+                  you shall abide under the shadow of the Almighty.<br />
+                  I will say of the Lord, He is your refuge and your fortress,<br />
+                  your God, in Him shall you trust all the days of your life.<br />
+                  Surely, He shall deliver you from the snare of the fowler<br />
+                  and from the noisome pestilence.<br />
+                  You are always safe, always blessed,<br />
+                  always the head and not the tail, more than a conqueror.<br />
+                  You walk like, talk like, and act like Jesus.<br />
+                  You are show stock, offspring of God our Father.<br />
+                  You shall live to be 120 years old, full of God,<br />
+                  full of grace, full of all that you need<br />
+                  spirit, body, and soul,<br />
+                  in the Name of Jesus Christ, your Lord and Savior!
                 </p>
               </div>
-              <p className="text-sm text-muted-foreground mt-4 font-serif italic">
+              <p className="text-sm text-muted-foreground mt-4 font-serif italic text-center">
                 "Jesus said, 'Let the little children come to me'" - Matthew 19:14
               </p>
             </div>
-            
-            <div className="space-y-4 flex-1">
+
+            <div className="border-l border-muted pl-6 space-y-4 w-full">
               <h2 className="text-2xl font-bold">Our Mission</h2>
               <p>
                 Kingdom Kids Secret Place is dedicated to helping Christian parents create a safe 
@@ -81,7 +81,6 @@ const About: React.FC = () => {
                 literate and firmly rooted in Christian values, creating a generation that can bring
                 light to the digital world.
               </p>
-              
               <div className="pt-4">
                 <Link href="/signup">
                   <Button className="mr-4">
