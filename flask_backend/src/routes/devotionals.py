@@ -1,10 +1,13 @@
 from flask import Blueprint, jsonify
+from src.storage import devotionals_db
 
-devotionals_bp = Blueprint("devotionals", __name__, url_prefix="/api")
+devotionals_bp = Blueprint("devotionals", __name__)
 
-@devotionals_bp.route("/devotionals", methods=["GET"])
+@devotionals_bp.route("/api/devotionals", methods=["GET"])
 def get_devotionals():
-    return jsonify([
-        {"id": 1, "title": "Trusting God", "date": "2024-04-01"},
-        {"id": 2, "title": "Love Your Neighbor", "date": "2024-04-02"}
-    ])
+    return jsonify(devotionals_db)
+
+@devotionals_bp.route("/api/devotionals/today", methods=["GET"])
+def get_today_devotional():
+    # In real use, filter by today's date
+    return jsonify(devotionals_db[0])  # return most recent as placeholder

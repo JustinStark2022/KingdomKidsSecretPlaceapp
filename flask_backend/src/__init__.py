@@ -12,9 +12,9 @@ def create_app():
 
     from src.routes import (
         auth, users, prayer, bible, alerts,
-        friend_requests, games, monitoring,
+        friend_requests, games, devotionals,
         lessons, notifications, settings,
-        dashboard  # ✅ NEW: Import your dashboard routes
+        dashboard  #  NEW: Import your dashboard routes
     )
 
     app.register_blueprint(auth.auth_bp)
@@ -24,11 +24,11 @@ def create_app():
     app.register_blueprint(alerts.alerts_bp)
     app.register_blueprint(friend_requests.friend_requests_bp)
     app.register_blueprint(games.games_bp)
-    app.register_blueprint(monitoring.monitoring_bp)
     app.register_blueprint(lessons.lessons_bp)
     app.register_blueprint(notifications.notifications_bp)
     app.register_blueprint(settings.settings_bp)
-    app.register_blueprint(dashboard.dashboard_bp)  # ✅ NEW: Register the dashboard blueprint
+    app.register_blueprint(dashboard.dashboard_bp) 
+    app.register_blueprint(devotionals.devotionals_bp) 
 
     @app.route("/", defaults={"path": ""})
     @app.route("/<path:path>")
