@@ -10,10 +10,11 @@ def create_app():
     CORS(app, supports_credentials=True)
 
     from src.routes import (
-    auth, users, prayer, bible, alerts,
-    friend_requests, games, monitoring,
-    lessons, notifications, settings
-)
+        auth, users, prayer, bible, alerts,
+        friend_requests, games, monitoring,
+        lessons, notifications, settings,
+        dashboard  # ✅ NEW: Import your dashboard routes
+    )
 
     app.register_blueprint(auth.auth_bp)
     app.register_blueprint(users.users_bp)
@@ -26,6 +27,7 @@ def create_app():
     app.register_blueprint(lessons.lessons_bp)
     app.register_blueprint(notifications.notifications_bp)
     app.register_blueprint(settings.settings_bp)
+    app.register_blueprint(dashboard.dashboard_bp)  # ✅ NEW: Register the dashboard blueprint
 
     @app.route("/", defaults={"path": ""})
     @app.route("/<path:path>")

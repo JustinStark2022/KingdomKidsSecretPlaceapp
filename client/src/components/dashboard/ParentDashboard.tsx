@@ -1,3 +1,4 @@
+// Updated: components/dashboard/ParentDashboard.tsx
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -39,17 +40,26 @@ const ParentDashboard: React.FC = () => {
     queryKey: ["/api/games/monitoring"],
   });
 
-  // 👇 Add loading fallbacks directly where needed (optional enhancement)
-  const summaryLoading = !summary;
-  const alertsLoading = !recentAlerts;
-  const friendsLoading = !friendRequests;
-  const gamesLoading = !gameAnalyses;
-
   return (
     <div className="space-y-8">
-      {/* your full UI structure remains unchanged here */}
+      <Card>
+        <CardContent className="p-4">
+          <h2 className="text-xl font-bold mb-2">Parental Overview</h2>
+          {summary ? (
+            <ul className="space-y-2">
+              <li><Check className="inline w-4 h-4 mr-1" /> {summary.lessonsCompleted}/{summary.totalLessons} Lessons Completed</li>
+              <li><BookOpen className="inline w-4 h-4 mr-1" /> {summary.scriptureProgressPercent}% Scripture Memorized</li>
+              <li><MessageSquare className="inline w-4 h-4 mr-1" /> {summary.prayerEntries} Prayer Entries</li>
+              <li><Users className="inline w-4 h-4 mr-1" /> {summary.childUsers.length} Linked Children</li>
+            </ul>
+          ) : (
+            <Skeleton className="h-20" />
+          )}
+        </CardContent>
+      </Card>
     </div>
   );
 };
 
 export default ParentDashboard;
+

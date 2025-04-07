@@ -52,9 +52,15 @@ const SignupForm = () => {
   const onSubmit = async (data: SignupData) => {
     try {
       setLoading(true);
-      const { confirmPassword, ...userData } = data;
+      const { confirmPassword, isParent, ...rest } = data;
+  
+      const userData = {
+        ...rest,
+        role: isParent ? "parent" : "child"
+      };
+  
       const response = await apiRequest("POST", "/api/auth/signup", userData);
-
+  
       if (response.ok) {
         toast({
           title: "Account created",

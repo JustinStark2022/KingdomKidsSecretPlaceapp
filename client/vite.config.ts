@@ -9,7 +9,7 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: '../flask-backend/static',
+    outDir: path.resolve(__dirname, "../flask-backend/static"),
     emptyOutDir: true,
   },
   plugins: [react()],

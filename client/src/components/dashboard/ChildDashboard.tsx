@@ -207,7 +207,7 @@ const ChildDashboard: React.FC<ChildDashboardProps> = ({ childId }) => {
         </Card>
       </section>
 
-      {/* 🎯 Activities Section stays unchanged (you can copy it back in here) */}
+      {/* Activities Section stays unchanged (you can copy it back in here) */}
     </div>
   );
 };

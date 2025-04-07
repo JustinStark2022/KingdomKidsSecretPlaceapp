@@ -35,7 +35,26 @@ export const useAuth = () => {
     }
   };
 
-  return { currentUser, login, signup, loading };
+  return {
+    currentUser,
+    login,
+    signup,
+    isLoading: loading,
+    isError: !loading && !currentUser,
+    fetchUser: () => {
+      setLoading(true);
+      axios.get("/api/users/me")
+        .then((res) => {
+          setCurrentUser(res.data);
+        })
+        .catch(() => {
+          setCurrentUser(null);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }
+  };
 };
 
 export default useAuth;
