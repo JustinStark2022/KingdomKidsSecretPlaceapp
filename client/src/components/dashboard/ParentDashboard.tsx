@@ -1,4 +1,3 @@
-// components/dashboard/ParentDashboard.tsx
 import React, { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -7,9 +6,12 @@ import GameAnalysis from "@/components/monitoring/GameAnalysis";
 import ChatMonitoring from "@/components/monitoring/ChatMonitoring";
 import ScreenTimeControls from "@/components/monitoring/ScreenTimeControls";
 import FriendRequests from "@/components/monitoring/FriendRequests";
-import { useQuery } from "@tanstack/react-query";
 import {
-  Shield, MessageSquare, Clock, Users, Activity
+  Shield,
+  MessageSquare,
+  Clock,
+  Users,
+  Activity
 } from "lucide-react";
 
 const ParentDashboard: React.FC = () => {
@@ -17,6 +19,7 @@ const ParentDashboard: React.FC = () => {
 
   return (
     <div className="space-y-6">
+      {/* Title */}
       <div>
         <h1 className="text-3xl font-bold mb-2">
           <span className="text-primary neon-text">Parental</span> Monitoring
@@ -26,77 +29,120 @@ const ParentDashboard: React.FC = () => {
         </p>
       </div>
 
-      <Tabs defaultValue={activeTab} onValueChange={setActiveTab}>
+      {/* Tabs */}
+      <Tabs defaultValue="dashboard" value={activeTab} onValueChange={setActiveTab}>
         <TabsList className="mb-6">
-          <TabsTrigger value="dashboard" className="flex items-center">
+          <TabsTrigger value="dashboard">
             <Activity className="mr-2 h-4 w-4" />
             Dashboard
           </TabsTrigger>
-          <TabsTrigger value="games" className="flex items-center">
+          <TabsTrigger value="games">
             <Shield className="mr-2 h-4 w-4" />
             Game Analysis
           </TabsTrigger>
-          <TabsTrigger value="chat" className="flex items-center">
+          <TabsTrigger value="chat">
             <MessageSquare className="mr-2 h-4 w-4" />
             Chat Monitoring
           </TabsTrigger>
-          <TabsTrigger value="screen-time" className="flex items-center">
+          <TabsTrigger value="screen-time">
             <Clock className="mr-2 h-4 w-4" />
             Screen Time
           </TabsTrigger>
-          <TabsTrigger value="friends" className="flex items-center">
+          <TabsTrigger value="friends">
             <Users className="mr-2 h-4 w-4" />
             Friend Requests
           </TabsTrigger>
         </TabsList>
 
+        {/* Dashboard Tab Content */}
         <TabsContent value="dashboard">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <Card className="cursor-pointer hover:border-primary transition-colors" onClick={() => setActiveTab("games")}>
+            {/* Game Analysis Card */}
+            <Card
+              className="cursor-pointer hover:shadow-lg hover:border-primary transition-all"
+              onClick={() => setActiveTab("games")}
+            >
               <CardContent className="p-6 text-center">
-                <Shield className="h-10 w-10 text-primary mx-auto mb-4 bg-primary/20 p-4 rounded-full" />
+                <div className="flex items-center justify-center mb-4">
+                  <div className="rounded-full bg-primary/20 p-4">
+                    <Shield className="h-10 w-10 text-primary" />
+                  </div>
+                </div>
                 <h3 className="text-xl font-bold mb-2">Game Analysis</h3>
                 <p className="text-muted-foreground mb-4">
                   Review game content and approve or block access
                 </p>
-                <Button>View Game Analysis</Button>
+                <Button onClick={() => setActiveTab("games")}>
+                  View Game Analysis
+                </Button>
               </CardContent>
             </Card>
 
-            <Card className="cursor-pointer hover:border-primary transition-colors" onClick={() => setActiveTab("chat")}>
+            {/* Chat Monitoring Card */}
+            <Card
+              className="cursor-pointer hover:shadow-lg hover:border-primary transition-all"
+              onClick={() => setActiveTab("chat")}
+            >
               <CardContent className="p-6 text-center">
-                <MessageSquare className="h-10 w-10 text-primary mx-auto mb-4 bg-primary/20 p-4 rounded-full" />
+                <div className="flex items-center justify-center mb-4">
+                  <div className="rounded-full bg-primary/20 p-4">
+                    <MessageSquare className="h-10 w-10 text-primary" />
+                  </div>
+                </div>
                 <h3 className="text-xl font-bold mb-2">Chat Monitoring</h3>
                 <p className="text-muted-foreground mb-4">
                   Monitor conversations and protect against harmful content
                 </p>
-                <Button>View Chat Logs</Button>
+                <Button onClick={() => setActiveTab("chat")}>
+                  View Chat Logs
+                </Button>
               </CardContent>
             </Card>
 
-            <Card className="cursor-pointer hover:border-primary transition-colors" onClick={() => setActiveTab("screen-time")}>
+            {/* Screen Time Controls Card */}
+            <Card
+              className="cursor-pointer hover:shadow-lg hover:border-primary transition-all"
+              onClick={() => setActiveTab("screen-time")}
+            >
               <CardContent className="p-6 text-center">
-                <Clock className="h-10 w-10 text-primary mx-auto mb-4 bg-primary/20 p-4 rounded-full" />
+                <div className="flex items-center justify-center mb-4">
+                  <div className="rounded-full bg-primary/20 p-4">
+                    <Clock className="h-10 w-10 text-primary" />
+                  </div>
+                </div>
                 <h3 className="text-xl font-bold mb-2">Screen Time Controls</h3>
                 <p className="text-muted-foreground mb-4">
                   Set limits and create healthy screen time schedules
                 </p>
-                <Button>Manage Screen Time</Button>
+                <Button onClick={() => setActiveTab("screen-time")}>
+                  Manage Screen Time
+                </Button>
               </CardContent>
             </Card>
 
-            <Card className="cursor-pointer hover:border-primary transition-colors" onClick={() => setActiveTab("friends")}>
+            {/* Friend Requests Card */}
+            <Card
+              className="cursor-pointer hover:shadow-lg hover:border-primary transition-all"
+              onClick={() => setActiveTab("friends")}
+            >
               <CardContent className="p-6 text-center">
-                <Users className="h-10 w-10 text-primary mx-auto mb-4 bg-primary/20 p-4 rounded-full" />
+                <div className="flex items-center justify-center mb-4">
+                  <div className="rounded-full bg-primary/20 p-4">
+                    <Users className="h-10 w-10 text-primary" />
+                  </div>
+                </div>
                 <h3 className="text-xl font-bold mb-2">Friend Requests</h3>
                 <p className="text-muted-foreground mb-4">
                   Review and approve your child's friend connections
                 </p>
-                <Button>Manage Friend Requests</Button>
+                <Button onClick={() => setActiveTab("friends")}>
+                  Manage Friend Requests
+                </Button>
               </CardContent>
             </Card>
           </div>
 
+          {/* Getting Started Section */}
           <div className="mt-8">
             <h2 className="text-xl font-bold mb-4">Getting Started</h2>
             <Card>
@@ -104,7 +150,6 @@ const ParentDashboard: React.FC = () => {
                 <p>
                   Welcome to the Kingdom Kids Parental Monitoring dashboard! Here, you can monitor and manage your child's digital experience to ensure it aligns with your family's Christian values.
                 </p>
-
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="border rounded-md p-4">
                     <h3 className="font-semibold mb-2 flex items-center">
@@ -115,7 +160,6 @@ const ParentDashboard: React.FC = () => {
                       Kingdom Kids analyzes game content, chat messages, and online activities to protect your child from inappropriate content.
                     </p>
                   </div>
-
                   <div className="border rounded-md p-4">
                     <h3 className="font-semibold mb-2 flex items-center">
                       <Clock className="h-5 w-5 text-primary mr-2" />
@@ -125,7 +169,6 @@ const ParentDashboard: React.FC = () => {
                       Set daily limits, schedule device access hours, and reward biblical learning with extra screen time.
                     </p>
                   </div>
-
                   <div className="border rounded-md p-4">
                     <h3 className="font-semibold mb-2 flex items-center">
                       <MessageSquare className="h-5 w-5 text-primary mr-2" />
@@ -135,7 +178,6 @@ const ParentDashboard: React.FC = () => {
                       AI-powered chat analysis flags potentially harmful conversations while respecting privacy.
                     </p>
                   </div>
-
                   <div className="border rounded-md p-4">
                     <h3 className="font-semibold mb-2 flex items-center">
                       <Users className="h-5 w-5 text-primary mr-2" />
@@ -151,6 +193,7 @@ const ParentDashboard: React.FC = () => {
           </div>
         </TabsContent>
 
+        {/* Individual Tab Views */}
         <TabsContent value="games">
           <GameAnalysis />
         </TabsContent>
