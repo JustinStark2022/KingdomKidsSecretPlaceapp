@@ -1,408 +1,181 @@
 import React, { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { 
+import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue
+  SelectValue,
 } from "@/components/ui/select";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Search, BookOpen, Heart, MessageSquare } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
 
-type BibleVersion = {
+interface BibleVersion {
   id: string;
   name: string;
-  description: string;
-};
+}
 
-type BibleBook = {
+const allBooks = [
+  { id: "GEN", name: "Genesis", chapters: 50 }, { id: "EXO", name: "Exodus", chapters: 40 }, { id: "LEV", name: "Leviticus", chapters: 27 },
+  { id: "NUM", name: "Numbers", chapters: 36 }, { id: "DEU", name: "Deuteronomy", chapters: 34 }, { id: "JOS", name: "Joshua", chapters: 24 },
+  { id: "JDG", name: "Judges", chapters: 21 }, { id: "RUT", name: "Ruth", chapters: 4 }, { id: "1SA", name: "1 Samuel", chapters: 31 },
+  { id: "2SA", name: "2 Samuel", chapters: 24 }, { id: "1KI", name: "1 Kings", chapters: 22 }, { id: "2KI", name: "2 Kings", chapters: 25 },
+  { id: "1CH", name: "1 Chronicles", chapters: 29 }, { id: "2CH", name: "2 Chronicles", chapters: 36 }, { id: "EZR", name: "Ezra", chapters: 10 },
+  { id: "NEH", name: "Nehemiah", chapters: 13 }, { id: "EST", name: "Esther", chapters: 10 }, { id: "JOB", name: "Job", chapters: 42 },
+  { id: "PSA", name: "Psalms", chapters: 150 }, { id: "PRO", name: "Proverbs", chapters: 31 }, { id: "ECC", name: "Ecclesiastes", chapters: 12 },
+  { id: "SNG", name: "Song of Solomon", chapters: 8 }, { id: "ISA", name: "Isaiah", chapters: 66 }, { id: "JER", name: "Jeremiah", chapters: 52 },
+  { id: "LAM", name: "Lamentations", chapters: 5 }, { id: "EZK", name: "Ezekiel", chapters: 48 }, { id: "DAN", name: "Daniel", chapters: 12 },
+  { id: "HOS", name: "Hosea", chapters: 14 }, { id: "JOL", name: "Joel", chapters: 3 }, { id: "AMO", name: "Amos", chapters: 9 },
+  { id: "OBA", name: "Obadiah", chapters: 1 }, { id: "JON", name: "Jonah", chapters: 4 }, { id: "MIC", name: "Micah", chapters: 7 },
+  { id: "NAM", name: "Nahum", chapters: 3 }, { id: "HAB", name: "Habakkuk", chapters: 3 }, { id: "ZEP", name: "Zephaniah", chapters: 3 },
+  { id: "HAG", name: "Haggai", chapters: 2 }, { id: "ZEC", name: "Zechariah", chapters: 14 }, { id: "MAL", name: "Malachi", chapters: 4 },
+  { id: "MAT", name: "Matthew", chapters: 28 }, { id: "MRK", name: "Mark", chapters: 16 }, { id: "LUK", name: "Luke", chapters: 24 },
+  { id: "JHN", name: "John", chapters: 21 }, { id: "ACT", name: "Acts", chapters: 28 }, { id: "ROM", name: "Romans", chapters: 16 },
+  { id: "1CO", name: "1 Corinthians", chapters: 16 }, { id: "2CO", name: "2 Corinthians", chapters: 13 }, { id: "GAL", name: "Galatians", chapters: 6 },
+  { id: "EPH", name: "Ephesians", chapters: 6 }, { id: "PHP", name: "Philippians", chapters: 4 }, { id: "COL", name: "Colossians", chapters: 4 },
+  { id: "1TH", name: "1 Thessalonians", chapters: 5 }, { id: "2TH", name: "2 Thessalonians", chapters: 3 }, { id: "1TI", name: "1 Timothy", chapters: 6 },
+  { id: "2TI", name: "2 Timothy", chapters: 4 }, { id: "TIT", name: "Titus", chapters: 3 }, { id: "PHM", name: "Philemon", chapters: 1 },
+  { id: "HEB", name: "Hebrews", chapters: 13 }, { id: "JAS", name: "James", chapters: 5 }, { id: "1PE", name: "1 Peter", chapters: 5 },
+  { id: "2PE", name: "2 Peter", chapters: 3 }, { id: "1JN", name: "1 John", chapters: 5 }, { id: "2JN", name: "2 John", chapters: 1 },
+  { id: "3JN", name: "3 John", chapters: 1 }, { id: "JUD", name: "Jude", chapters: 1 }, { id: "REV", name: "Revelation", chapters: 22 },
+];
+
+
+interface BibleBook {
   id: string;
   name: string;
   chapters: number;
-};
-
-type BibleChapter = {
-  book: string;
-  chapter: number;
-  verses: {
-    verse: number;
-    text: string;
-  }[];
-};
+}
 
 const BibleReader: React.FC = () => {
-  const [selectedVersion, setSelectedVersion] = useState<string>("kjv");
-  const [selectedBook, setSelectedBook] = useState<string>("");
-  const [selectedChapter, setSelectedChapter] = useState<number>(1);
-  const [searchQuery, setSearchQuery] = useState<string>("");
-  const [favorites, setFavorites] = useState<string[]>([]);
+  const [bibleId, setBibleId] = useState("de4e12af7f28f599-02");
+  const [book, setBook] = useState("GEN");
+  const [chapter, setChapter] = useState("1");
+  const [verse, setVerse] = useState("");
 
-  // Fetch Bible versions
-  const { data: versions, isLoading: versionsLoading } = useQuery<BibleVersion[]>({
-    queryKey: ['/api/bible/versions'],
+  const passage = verse ? `${book}.${chapter}.${verse}` : `${book}.${chapter}`;
+
+  const { data: bibleVersionsData = { versions: [] }, isLoading: versionsLoading } = useQuery({
+    queryKey: ["bibleVersions"],
+    queryFn: async () => {
+      const res = await fetch("/api/bible/versions");
+      return res.json();
+    },
   });
 
-  // Fetch Bible books
-  const { data: books, isLoading: booksLoading } = useQuery<BibleBook[]>({
-    queryKey: ['/api/bible/books', selectedVersion],
-    enabled: !!selectedVersion,
+  const { data: booksData = [], isLoading: booksLoading } = useQuery({
+    queryKey: ["bibleBooks"],
+    queryFn: async () => {
+      const res = await fetch("/api/bible/books");
+      return res.json();
+    },
   });
 
-  // Fetch chapter content
-  const { data: chapterContent, isLoading: chapterLoading } = useQuery<BibleChapter>({
-    queryKey: ['/api/bible/content', selectedVersion, selectedBook, selectedChapter],
-    enabled: !!selectedVersion && !!selectedBook && !!selectedChapter,
+  const { data: chapterData } = useQuery({
+    queryKey: ["chapterData", bibleId, `${book}.${chapter}`],
+    queryFn: async () => {
+      const res = await fetch(`/api/bible/chapters?bibleId=${bibleId}&chapterId=${book}.${chapter}`);
+      const data = await res.json();
+      return data?.data;
+    },
+    enabled: !!bibleId && !!book && !!chapter,
   });
 
-  // Handle search
-  const { data: searchResults, isLoading: searchLoading } = useQuery<any>({
-    queryKey: ['/api/bible/search', searchQuery, selectedVersion],
-    enabled: searchQuery.length > 2,
+  const { data: verseData, isLoading: contentLoading, error } = useQuery({
+    queryKey: ["bibleVerse", bibleId, passage],
+    queryFn: async () => {
+      const res = await fetch(`/api/bible-verse?bibleId=${bibleId}&passage=${encodeURIComponent(passage)}`);
+      const data = await res.json();
+      return data?.data?.content || "Verse not found.";
+    },
+    enabled: !!bibleId && !!book && !!chapter,
   });
-
-  const toggleFavorite = (reference: string) => {
-    setFavorites(prev => 
-      prev.includes(reference) 
-        ? prev.filter(ref => ref !== reference)
-        : [...prev, reference]
-    );
-  };
-
-  const saveVerse = async (reference: string, text: string) => {
-    try {
-      await fetch('/api/bible/save-verse', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ reference, text }),
-      });
-      alert('Verse saved to your journal!');
-    } catch (error) {
-      console.error('Error saving verse:', error);
-    }
-  };
 
   return (
     <div className="space-y-6">
-      <div>
-        <h2 className="text-2xl font-bold mb-2">
-          <span className="text-primary neon-text">Bible Reader</span>
-        </h2>
-        <p className="text-muted-foreground">Explore the Word of God in kid-friendly translations</p>
-      </div>
-
       <Card>
-        <CardContent className="p-4">
-          <div className="flex flex-col md:flex-row justify-between gap-4 mb-4">
-            <div className="flex-1">
-              <label htmlFor="bible-version" className="block text-sm font-medium mb-1">
-                Bible Version
-              </label>
-              <Select 
-                value={selectedVersion} 
-                onValueChange={setSelectedVersion}
-              >
-                <SelectTrigger id="bible-version">
-                  <SelectValue placeholder="Select a version" />
-                </SelectTrigger>
-                <SelectContent>
-                  {versionsLoading ? (
-                    <SelectItem value="loading">Loading...</SelectItem>
-                  ) : versions && versions.map(version => (
-                    <SelectItem key={version.id} value={version.id}>
-                      {version.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            
-            <div className="flex-1">
-              <label htmlFor="bible-book" className="block text-sm font-medium mb-1">
-                Book
-              </label>
-              <Select 
-                value={selectedBook} 
-                onValueChange={setSelectedBook}
-                disabled={!selectedVersion || booksLoading}
-              >
-                <SelectTrigger id="bible-book">
-                  <SelectValue placeholder="Select a book" />
-                </SelectTrigger>
-                <SelectContent>
-                  {booksLoading ? (
-                    <SelectItem value="loading">Loading...</SelectItem>
-                  ) : books && books.map(book => (
-                    <SelectItem key={book.id} value={book.id}>
-                      {book.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            
-            <div className="flex-1">
-              <label htmlFor="bible-chapter" className="block text-sm font-medium mb-1">
-                Chapter
-              </label>
-              <Select 
-                value={selectedChapter.toString()} 
-                onValueChange={(value) => setSelectedChapter(parseInt(value))}
-                disabled={!selectedBook || !books}
-              >
-                <SelectTrigger id="bible-chapter">
-                  <SelectValue placeholder="Select chapter" />
-                </SelectTrigger>
-                <SelectContent>
-                  {books && selectedBook && books.find(b => b.id === selectedBook)?.chapters 
-                    ? Array.from({ length: books.find(b => b.id === selectedBook)!.chapters }, (_, i) => (
-                      <SelectItem key={i + 1} value={(i + 1).toString()}>
-                        Chapter {i + 1}
-                      </SelectItem>
-                    ))
-                    : <SelectItem value="1">Chapter 1</SelectItem>
-                  }
-                </SelectContent>
-              </Select>
-            </div>
+        <CardContent className="p-4 grid gap-4 md:grid-cols-4">
+          <div>
+            <label className="block text-sm font-medium mb-1">Version</label>
+            <Select value={bibleId} onValueChange={setBibleId}>
+              <SelectTrigger>
+                <SelectValue placeholder="Select a version" />
+              </SelectTrigger>
+              <SelectContent>
+                {bibleVersionsData.versions.map((version: BibleVersion) => (
+                  <SelectItem key={version.id} value={version.id}>
+                    {version.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
-          
-          <div className="relative mb-4">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input
-              type="search"
-              placeholder="Search the Bible..."
-              className="pl-10"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
+
+          <div>
+            <label className="block text-sm font-medium mb-1">Book</label>
+            <Select value={book} onValueChange={setBook}>
+              <SelectTrigger>
+                <SelectValue placeholder="Select a book" />
+              </SelectTrigger>
+              <SelectContent>
+                {allBooks.map((b) => (
+                  <SelectItem key={b.id} value={b.id}>
+                    {b.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-1">Chapter</label>
+            <Select value={chapter} onValueChange={setChapter}>
+              <SelectTrigger>
+                <SelectValue placeholder="Select a chapter" />
+              </SelectTrigger>
+              <SelectContent>
+                {Array.from({ length: allBooks.find((b) => b.id === book)?.chapters || 50 }, (_, i) => (
+                  <SelectItem key={i + 1} value={(i + 1).toString()}>
+                    Chapter {i + 1}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-1">Verse</label>
+            <Select
+              value={verse || "0"}
+              onValueChange={(val) => setVerse(val === "0" ? "" : val)}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Whole Chapter" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="0">Whole Chapter</SelectItem>
+                {Array.from({ length: 50 }, (_, i) => (
+                  <SelectItem key={i + 1} value={(i + 1).toString()}>
+                    Verse {i + 1}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
         </CardContent>
       </Card>
 
-      <Tabs defaultValue="read">
-        <TabsList className="mb-4">
-          <TabsTrigger value="read" className="flex items-center">
-            <BookOpen className="mr-2 h-4 w-4" />
-            Read
-          </TabsTrigger>
-          <TabsTrigger value="search" className="flex items-center">
-            <Search className="mr-2 h-4 w-4" />
-            Search
-          </TabsTrigger>
-          <TabsTrigger value="favorites" className="flex items-center">
-            <Heart className="mr-2 h-4 w-4" />
-            Favorites
-          </TabsTrigger>
-        </TabsList>
-        
-        <TabsContent value="read">
-          <Card>
-            <CardContent className="p-6">
-              {chapterLoading ? (
-                <div className="space-y-4">
-                  <Skeleton className="h-6 w-full" />
-                  <Skeleton className="h-4 w-full" />
-                  <Skeleton className="h-4 w-full" />
-                  <Skeleton className="h-4 w-full" />
-                  <Skeleton className="h-4 w-full" />
-                </div>
-              ) : chapterContent ? (
-                <div>
-                  <h3 className="text-xl font-bold mb-4">
-                    {selectedBook} {selectedChapter}
-                  </h3>
-                  
-                  <div className="space-y-2 text-lg leading-relaxed">
-                    {chapterContent.verses.map((verse) => (
-                      <div key={verse.verse} className="group relative">
-                        <span className="text-primary font-semibold mr-2">{verse.verse}</span>
-                        <span>{verse.text}</span>
-                        
-                        <div className="absolute right-0 top-0 hidden group-hover:flex items-center space-x-1">
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-8 w-8"
-                            onClick={() => toggleFavorite(`${selectedBook} ${selectedChapter}:${verse.verse}`)}
-                          >
-                            <Heart
-                              className={`h-4 w-4 ${
-                                favorites.includes(`${selectedBook} ${selectedChapter}:${verse.verse}`)
-                                  ? "fill-primary text-primary"
-                                  : "text-muted-foreground"
-                              }`}
-                            />
-                          </Button>
-                          
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-8 w-8"
-                            onClick={() => saveVerse(`${selectedBook} ${selectedChapter}:${verse.verse}`, verse.text)}
-                          >
-                            <MessageSquare className="h-4 w-4 text-muted-foreground" />
-                          </Button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  
-                  <div className="flex justify-between mt-6">
-                    <Button
-                      variant="outline"
-                      disabled={selectedChapter <= 1}
-                      onClick={() => setSelectedChapter(prev => Math.max(1, prev - 1))}
-                    >
-                      Previous Chapter
-                    </Button>
-                    
-                    <Button
-                      variant="outline"
-                      disabled={
-                        !books ||
-                        !selectedBook ||
-                        selectedChapter >= (books.find(b => b.id === selectedBook)?.chapters || 1)
-                      }
-                      onClick={() => {
-                        const maxChapters = books?.find(b => b.id === selectedBook)?.chapters || 1;
-                        setSelectedChapter(prev => Math.min(maxChapters, prev + 1));
-                      }}
-                    >
-                      Next Chapter
-                    </Button>
-                  </div>
-                </div>
-              ) : (
-                <div className="text-center py-10">
-                  <BookOpen className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
-                  <h3 className="text-xl font-medium mb-2">Select a passage to read</h3>
-                  <p className="text-muted-foreground">
-                    Choose a book and chapter from the options above
-                  </p>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        </TabsContent>
-        
-        <TabsContent value="search">
-          <Card>
-            <CardContent className="p-6">
-              {searchQuery.length < 3 ? (
-                <div className="text-center py-6">
-                  <Search className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
-                  <h3 className="text-xl font-medium mb-2">Search the Bible</h3>
-                  <p className="text-muted-foreground">
-                    Type at least 3 characters to search
-                  </p>
-                </div>
-              ) : searchLoading ? (
-                <div className="space-y-4">
-                  <Skeleton className="h-6 w-full" />
-                  <Skeleton className="h-4 w-full" />
-                  <Skeleton className="h-4 w-full" />
-                  <Skeleton className="h-4 w-full" />
-                </div>
-              ) : searchResults && searchResults.results && searchResults.results.length > 0 ? (
-                <div>
-                  <h3 className="text-xl font-bold mb-4">
-                    Search Results for "{searchQuery}"
-                  </h3>
-                  
-                  <div className="space-y-4">
-                    {searchResults.results.map((result: any, index: number) => (
-                      <div key={index} className="p-3 border rounded-md hover:border-primary">
-                        <h4 className="font-semibold text-primary">
-                          {result.reference}
-                        </h4>
-                        <p className="mt-1">{result.text}</p>
-                        <div className="flex justify-end mt-2">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="text-xs"
-                            onClick={() => {
-                              const [book, chapterVerse] = result.reference.split(' ');
-                              const [chapter] = chapterVerse.split(':');
-                              setSelectedBook(book);
-                              setSelectedChapter(parseInt(chapter));
-                              setSearchQuery('');
-                            }}
-                          >
-                            Go to passage
-                          </Button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ) : (
-                <div className="text-center py-6">
-                  <p className="text-muted-foreground">
-                    No results found for "{searchQuery}"
-                  </p>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        </TabsContent>
-        
-        <TabsContent value="favorites">
-          <Card>
-            <CardContent className="p-6">
-              {favorites.length > 0 ? (
-                <div>
-                  <h3 className="text-xl font-bold mb-4">Your Favorite Verses</h3>
-                  
-                  <div className="space-y-4">
-                    {favorites.map((reference, index) => (
-                      <div key={index} className="p-3 border rounded-md hover:border-primary">
-                        <h4 className="font-semibold text-primary">{reference}</h4>
-                        <div className="flex justify-end mt-2">
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="text-xs mr-2"
-                            onClick={() => {
-                              const [book, chapterVerse] = reference.split(' ');
-                              const [chapter] = chapterVerse.split(':');
-                              setSelectedBook(book);
-                              setSelectedChapter(parseInt(chapter));
-                            }}
-                          >
-                            Go to passage
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="text-xs text-destructive"
-                            onClick={() => toggleFavorite(reference)}
-                          >
-                            Remove
-                          </Button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ) : (
-                <div className="text-center py-10">
-                  <Heart className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
-                  <h3 className="text-xl font-medium mb-2">No favorites yet</h3>
-                  <p className="text-muted-foreground">
-                    Mark verses as favorites while reading to save them here
-                  </p>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
+      <Card>
+        <CardContent className="p-6">
+          {contentLoading ? (
+            <Skeleton className="h-16 w-full" />
+          ) : error ? (
+            <p>Error loading scripture.</p>
+          ) : (
+            <div dangerouslySetInnerHTML={{ __html: verseData }} />
+          )}
+        </CardContent>
+      </Card>
     </div>
   );
 };
