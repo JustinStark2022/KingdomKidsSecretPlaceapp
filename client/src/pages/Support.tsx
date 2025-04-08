@@ -174,6 +174,45 @@ const Support: React.FC = () => {
           </TabsContent>
         </Tabs>
       </div>
+      <Card className="border border-primary/10">
+        <CardHeader>
+          <CardTitle className="text-xl">Frequently Asked Questions</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div>
+            <p className="font-semibold">How do I monitor my child’s game activity?</p>
+            <p className="text-muted-foreground text-sm">Go to the Dashboard &gt; Game Analysis tab to review content and approve/block games.</p>
+          </div>
+          <div>
+            <p className="font-semibold">How do rewards work?</p>
+            <p className="text-muted-foreground text-sm">Children earn screen time by completing scripture and lesson goals. Each completed activity grants bonus time.</p>
+          </div>
+          <div>
+            <p className="font-semibold">Can I use this on multiple devices?</p>
+            <p className="text-muted-foreground text-sm">Yes! Simply log in using the same account on another device and your progress will sync.</p>
+          </div>
+          <div>
+            <p className="font-semibold">Is my child's data secure?</p>
+            <p className="text-muted-foreground text-sm">Absolutely. We use secure authentication and don’t sell or share your data with third parties.</p>
+          </div>
+        </CardContent>
+      </Card>
+      <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); console.log("Submit form"); }}>
+        <div>
+          <label className="text-sm font-medium">Your Email</label>
+          <Input type="email" required />
+        </div>
+        <div>
+          <label className="text-sm font-medium">Message</label>
+          <textarea
+            rows={4}
+            className="w-full border border-input rounded-md p-2 text-sm bg-background text-foreground"
+            placeholder="How can we help you?"
+            required
+          />
+        </div>
+        <Button type="submit" className="w-full">Send Message</Button>
+      </form>
       
       <Card id="contact">
         <CardContent className="p-6">
