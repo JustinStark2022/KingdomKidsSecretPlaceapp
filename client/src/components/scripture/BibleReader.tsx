@@ -40,13 +40,6 @@ const allBooks = [
   { id: "3JN", name: "3 John", chapters: 1 }, { id: "JUD", name: "Jude", chapters: 1 }, { id: "REV", name: "Revelation", chapters: 22 },
 ];
 
-
-interface BibleBook {
-  id: string;
-  name: string;
-  chapters: number;
-}
-
 const BibleReader: React.FC = () => {
   const [bibleId, setBibleId] = useState("de4e12af7f28f599-02");
   const [book, setBook] = useState("GEN");
@@ -63,24 +56,6 @@ const BibleReader: React.FC = () => {
     },
   });
 
-  const { data: booksData = [], isLoading: booksLoading } = useQuery({
-    queryKey: ["bibleBooks"],
-    queryFn: async () => {
-      const res = await fetch("/api/bible/books");
-      return res.json();
-    },
-  });
-
-  const { data: chapterData } = useQuery({
-    queryKey: ["chapterData", bibleId, `${book}.${chapter}`],
-    queryFn: async () => {
-      const res = await fetch(`/api/bible/chapters?bibleId=${bibleId}&chapterId=${book}.${chapter}`);
-      const data = await res.json();
-      return data?.data;
-    },
-    enabled: !!bibleId && !!book && !!chapter,
-  });
-
   const { data: verseData, isLoading: contentLoading, error } = useQuery({
     queryKey: ["bibleVerse", bibleId, passage],
     queryFn: async () => {
@@ -91,17 +66,19 @@ const BibleReader: React.FC = () => {
     enabled: !!bibleId && !!book && !!chapter,
   });
 
+  const selectedBookChapters = allBooks.find((b) => b.id === book)?.chapters || 50;
+
   return (
     <div className="space-y-6">
-      <Card>
-        <CardContent className="p-4 grid gap-4 md:grid-cols-4">
+      <Card className="bg-white dark:bg-muted/90 shadow-md rounded-2xl border border-gray-200 dark:border-muted px-4 py-6">
+        <CardContent className="grid gap-6 md:grid-cols-4">
           <div>
-            <label className="block text-sm font-medium mb-1">Version</label>
+            <label className="block text-sm font-semibold text-muted-foreground mb-1">Version</label>
             <Select value={bibleId} onValueChange={setBibleId}>
-              <SelectTrigger>
+              <SelectTrigger className="w-full rounded-xl border-gray-300 dark:border-muted text-sm shadow-sm">
                 <SelectValue placeholder="Select a version" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-white dark:bg-muted border border-muted rounded-xl">
                 {bibleVersionsData.versions.map((version: BibleVersion) => (
                   <SelectItem key={version.id} value={version.id}>
                     {version.name}
@@ -112,12 +89,12 @@ const BibleReader: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">Book</label>
+            <label className="block text-sm font-semibold text-muted-foreground mb-1">Book</label>
             <Select value={book} onValueChange={setBook}>
-              <SelectTrigger>
+              <SelectTrigger className="w-full rounded-xl border-gray-300 dark:border-muted text-sm shadow-sm">
                 <SelectValue placeholder="Select a book" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-white dark:bg-muted border border-muted rounded-xl">
                 {allBooks.map((b) => (
                   <SelectItem key={b.id} value={b.id}>
                     {b.name}
@@ -128,13 +105,13 @@ const BibleReader: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">Chapter</label>
+            <label className="block text-sm font-semibold text-muted-foreground mb-1">Chapter</label>
             <Select value={chapter} onValueChange={setChapter}>
-              <SelectTrigger>
+              <SelectTrigger className="w-full rounded-xl border-gray-300 dark:border-muted text-sm shadow-sm">
                 <SelectValue placeholder="Select a chapter" />
               </SelectTrigger>
-              <SelectContent>
-                {Array.from({ length: allBooks.find((b) => b.id === book)?.chapters || 50 }, (_, i) => (
+              <SelectContent className="bg-white dark:bg-muted border border-muted rounded-xl">
+                {Array.from({ length: selectedBookChapters }, (_, i) => (
                   <SelectItem key={i + 1} value={(i + 1).toString()}>
                     Chapter {i + 1}
                   </SelectItem>
@@ -144,15 +121,12 @@ const BibleReader: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">Verse</label>
-            <Select
-              value={verse || "0"}
-              onValueChange={(val) => setVerse(val === "0" ? "" : val)}
-            >
-              <SelectTrigger>
+            <label className="block text-sm font-semibold text-muted-foreground mb-1">Verse</label>
+            <Select value={verse || "0"} onValueChange={(val) => setVerse(val === "0" ? "" : val)}>
+              <SelectTrigger className="w-full rounded-xl border-gray-300 dark:border-muted text-sm shadow-sm">
                 <SelectValue placeholder="Whole Chapter" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-white dark:bg-muted border border-muted rounded-xl">
                 <SelectItem value="0">Whole Chapter</SelectItem>
                 {Array.from({ length: 50 }, (_, i) => (
                   <SelectItem key={i + 1} value={(i + 1).toString()}>
@@ -170,9 +144,9 @@ const BibleReader: React.FC = () => {
           {contentLoading ? (
             <Skeleton className="h-16 w-full" />
           ) : error ? (
-            <p>Error loading scripture.</p>
+            <p className="text-red-500">Error loading scripture.</p>
           ) : (
-            <div dangerouslySetInnerHTML={{ __html: verseData }} />
+            <div className="prose dark:prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: verseData }} />
           )}
         </CardContent>
       </Card>
