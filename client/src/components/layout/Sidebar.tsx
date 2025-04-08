@@ -34,7 +34,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onClose }) => {
     { href: "/lessons", label: "Bible Lessons", icon: <GraduationCap className="h-5 w-5" /> },
     { href: "/settings", label: "Settings", icon: <Settings className="h-5 w-5" /> },
     { href: "/about", label: "About Us", icon: <Info className="h-5 w-5" /> },
-    { href: "/support", label: "FAQ & Support", icon: <HelpCircle className="h-5 w-5" /> },
+    { href: "/support", label: "Support", icon: <HelpCircle className="h-5 w-5" /> },
   ];
 
   const mobileSidebar = (
