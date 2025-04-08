@@ -20,7 +20,7 @@ import {
   Gamepad2,
   UserPlus
 } from "lucide-react";
-import Logo from "@/components/ui/logo";
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 
@@ -32,7 +32,7 @@ const About: React.FC = () => {
           <span className="high-contrast-text text-primary neon-text">About</span> Kingdom Kids
         </h1>
         <p className="text-muted-foreground">
-          Help and support resources for the Kingdom Kids Secret Place application
+          Learn more about the mission and purpose of the Kingdom Kids Secret Place application
         </p>
       </div>
       
@@ -99,144 +99,6 @@ const About: React.FC = () => {
           </div>
         </CardContent>
       </Card>
-
-      <div className="pt-6">
-        <div className="flex items-center space-x-2 mb-6">
-          <div className="bg-primary/10 p-2 rounded-full">
-            <LifeBuoy className="h-6 w-6 text-primary high-contrast-text" />
-          </div>
-          <h2 className="text-2xl font-bold">Help & Support</h2>
-        </div>
-
-        <div className="relative mb-6">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-          <Input 
-            className="pl-10 bg-background" 
-            placeholder="Search for help topics..."
-          />
-        </div>
-
-        <Tabs defaultValue="parents" className="space-y-4">
-          <TabsList className="w-full grid grid-cols-2">
-            <TabsTrigger value="parents" className="text-base">
-              <Shield className="mr-2 h-4 w-4 text-primary high-contrast-text" />
-              For Parents
-            </TabsTrigger>
-            <TabsTrigger value="children" className="text-base">
-              <Gamepad2 className="mr-2 h-4 w-4 text-primary high-contrast-text" />
-              For Children
-            </TabsTrigger>
-          </TabsList>
-          
-          <TabsContent value="parents" className="space-y-4">
-            <Card className="border border-primary/10">
-              <CardHeader className="pb-3">
-                <CardTitle className="flex items-center">
-                  <Shield className="h-5 w-5 mr-2 text-primary high-contrast-text" />
-                  <span>Parental Controls</span>
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <Button variant="outline" className="justify-start h-auto py-3 px-4">
-                    <div className="flex gap-3 items-start">
-                      <FileQuestion className="h-5 w-5 text-primary high-contrast-text" />
-                      <div className="text-left">
-                        <p className="font-semibold">Setting Up Game Monitoring</p>
-                        <p className="text-xs text-muted-foreground">Learn how to monitor your child's gaming activity</p>
-                      </div>
-                    </div>
-                  </Button>
-                  
-                  <Button variant="outline" className="justify-start h-auto py-3 px-4">
-                    <div className="flex gap-3 items-start">
-                      <UserPlus className="h-5 w-5 text-primary high-contrast-text" />
-                      <div className="text-left">
-                        <p className="font-semibold">Friend Request Approvals</p>
-                        <p className="text-xs text-muted-foreground">How to review and manage friend requests</p>
-                      </div>
-                    </div>
-                  </Button>
-                  
-                  <Button variant="outline" className="justify-start h-auto py-3 px-4">
-                    <div className="flex gap-3 items-start">
-                      <MessageSquare className="h-5 w-5 text-primary high-contrast-text" />
-                      <div className="text-left">
-                        <p className="font-semibold">Chat Monitoring</p>
-                        <p className="text-xs text-muted-foreground">How to review chat conversations and set limits</p>
-                      </div>
-                    </div>
-                  </Button>
-                  
-                  <Button variant="outline" className="justify-start h-auto py-3 px-4">
-                    <div className="flex gap-3 items-start">
-                      <Clock className="h-5 w-5 text-primary high-contrast-text" />
-                      <div className="text-left">
-                        <p className="font-semibold">Screen Time Management</p>
-                        <p className="text-xs text-muted-foreground">Setting healthy limits and reward time</p>
-                      </div>
-                    </div>
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-          
-          <TabsContent value="children" className="space-y-4">
-            <Card className="border border-primary/10">
-              <CardHeader className="pb-3">
-                <CardTitle className="flex items-center">
-                  <BookOpen className="h-5 w-5 mr-2 text-primary high-contrast-text" />
-                  <span>Biblical Features</span>
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <Button variant="outline" className="justify-start h-auto py-3 px-4">
-                    <div className="flex gap-3 items-start">
-                      <CheckCircle className="h-5 w-5 text-primary high-contrast-text" />
-                      <div className="text-left">
-                        <p className="font-semibold">Earning Rewards</p>
-                        <p className="text-xs text-muted-foreground">How to earn extra game time through Biblical activities</p>
-                      </div>
-                    </div>
-                  </Button>
-                  
-                  <Button variant="outline" className="justify-start h-auto py-3 px-4">
-                    <div className="flex gap-3 items-start">
-                      <BookOpen className="h-5 w-5 text-primary high-contrast-text" />
-                      <div className="text-left">
-                        <p className="font-semibold">Scripture Memorization</p>
-                        <p className="text-xs text-muted-foreground">Tips for memorizing Bible verses effectively</p>
-                      </div>
-                    </div>
-                  </Button>
-                  
-                  <Button variant="outline" className="justify-start h-auto py-3 px-4">
-                    <div className="flex gap-3 items-start">
-                      <MessageSquare className="h-5 w-5 text-primary high-contrast-text" />
-                      <div className="text-left">
-                        <p className="font-semibold">Prayer Journal</p>
-                        <p className="text-xs text-muted-foreground">How to use your digital prayer journal</p>
-                      </div>
-                    </div>
-                  </Button>
-                  
-                  <Button variant="outline" className="justify-start h-auto py-3 px-4">
-                    <div className="flex gap-3 items-start">
-                      <Award className="h-5 w-5 text-primary high-contrast-text" />
-                      <div className="text-left">
-                        <p className="font-semibold">Bible Quizzes</p>
-                        <p className="text-xs text-muted-foreground">How to complete Bible quizzes and earn rewards</p>
-                      </div>
-                    </div>
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
-      </div>
       
       <div className="pt-6">
         <div className="flex items-center space-x-2 mb-6">

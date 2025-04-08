@@ -14,7 +14,7 @@ def create_app():
         auth, users, prayer, bible, alerts,
         friend_requests, games, devotionals,
         lessons, notifications, settings,
-        dashboard  #  NEW: Import your dashboard routes
+        dashboard  
     )
 
     app.register_blueprint(auth.auth_bp)

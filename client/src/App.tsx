@@ -9,7 +9,7 @@ import Bible from "./pages/Bible";
 import Prayer from "./pages/Prayer";
 import Devotionals from "./pages/Devotionals";
 import Lessons from "./pages/Lessons";
-import Monitoring from "./pages/Monitoring";
+import Support from "./pages/Support";
 import Settings from "./pages/Settings";
 import About from "./pages/About";
 import NotFound from "@/pages/not-found";
@@ -32,6 +32,7 @@ function App() {
               <Route path="/lessons" component={Lessons} />
               <Route path="/settings" component={Settings} />
               <Route path="/about" component={About} />
+              <Route path="/support" component={Support} />
               <Route component={NotFound} />
             </Switch>
           </Layout>
