@@ -10,7 +10,7 @@
     --card-foreground: 240 10% 3.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
-    --primary: 112 100% 54%;
+    --primary: 190 100% 60%;
     --primary-foreground: 240 10% 3.9%;
     --secondary: 240 4.8% 95.9%;
     --secondary-foreground: 240 5.9% 10%;
@@ -22,10 +22,9 @@
     --destructive-foreground: 0 0% 98%;
     --border: 240 5.9% 90%;
     --input: 240 5.9% 90%;
-    --ring: 112 100% 54%;
-    --radius: 0.5rem;
+    --ring: 190 100% 60%;
     
-    --chart-1: 112 100% 54%;
+    --chart-1: 190 100% 60%;
     --chart-2: 262 83.3% 57.8%;
     --chart-3: 176 100% 39.2%;
     --chart-4: 43 96.4% 56.3%;
@@ -33,12 +32,12 @@
     
     --sidebar-background: 0 0% 100%;
     --sidebar-foreground: 240 10% 3.9%;
-    --sidebar-primary: 112 100% 54%;
+    --sidebar-primary: 190 100% 60%;
     --sidebar-primary-foreground: 240 10% 3.9%;
     --sidebar-accent: 240 4.8% 95.9%;
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 240 5.9% 90%;
-    --sidebar-ring: 112 100% 54%;
+    --sidebar-ring: 190 100% 60%;
   }
 
   .dark {
@@ -48,7 +47,7 @@
     --card-foreground: 0 0% 98%;
     --popover: 240 10% 12%;
     --popover-foreground: 0 0% 98%;
-    --primary: 112 100% 54%;
+    --primary: 190 100% 60%;
     --primary-foreground: 240 10% 3.9%;
     --secondary: 240 3.7% 15.9%;
     --secondary-foreground: 0 0% 98%;
@@ -60,9 +59,9 @@
     --destructive-foreground: 0 0% 98%;
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
-    --ring: 112 100% 54%;
+    --ring: 190 100% 60%;
     
-    --chart-1: 112 100% 54%;
+    --chart-1: 190 100% 60%;
     --chart-2: 262 83.3% 57.8%;
     --chart-3: 176 100% 39.2%;
     --chart-4: 43 96.4% 56.3%;
@@ -70,12 +69,12 @@
     
     --sidebar-background: 240 10% 12%;
     --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 112 100% 54%;
+    --sidebar-primary: 190 100% 60%;
     --sidebar-primary-foreground: 240 10% 3.9%;
     --sidebar-accent: 240 3.7% 15.9%;
     --sidebar-accent-foreground: 0 0% 98%;
     --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 112 100% 54%;
+    --sidebar-ring: 190 100% 60%;
   }
 
   * {
@@ -117,15 +116,13 @@
       0 0 6px hsl(var(--primary) / 0.8),
       0 0 10px hsl(var(--primary) / 0.6);
   }
-  
-  /* Special heading for scripture verses */
+
   .scripture-heading {
     font-family: serif;
     font-weight: 600;
     letter-spacing: 0.03em;
   }
-  
-  /* High-contrast text for better readability */
+
   .high-contrast-text {
     font-weight: 700;
     color: hsl(var(--primary));
