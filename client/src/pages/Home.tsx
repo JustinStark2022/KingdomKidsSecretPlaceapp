@@ -10,11 +10,11 @@ const Home: React.FC = () => {
     <div className="min-h-screen relative overflow-hidden">
       {/* Background Image */}
       <div
-        className="absolute inset-0 z-0 bg-cover bg-center opacity-20 dark:opacity-40
+        className="absolute inset-0 z-0 bg-cover bg-center opacity-15 dark:opacity-30
         "
         style={{
           backgroundImage: "url('/images/homerunbg1.png')",
-          backgroundSize: '148%', // Adjusts the image to 50% of the div size
+          backgroundSize: '148%',
         }}
       />
 
@@ -31,12 +31,12 @@ const Home: React.FC = () => {
             </h1>
             <p className="text-xl md:text-3xl font-bold text-muted-foreground max-w-3xl mx-auto mb-10">
               A Christian parental control app that monitors online activity while teaching 
-              scripture and Jesus Christ The way, the truth, and the life.
+              scripture &amp; about Thier Lord &amp; Savior Jesus Christ The way, the truth, and the life.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <Link href="/signup">
                 <Button size="lg" className="text-lg px-8">
-                  Get Started
+                  Sign Up
                 </Button>
               </Link>
               <Link href="/login">
@@ -203,7 +203,7 @@ const Home: React.FC = () => {
         </section>
 
         {/* Footer */}
-        <footer className="py-12 bg-card border-t px-4">
+        <footer className="pt-12 pb-5 bg-card border-t px-4">
           <div className="container mx-auto">
             <div className="flex flex-col md:flex-row justify-between items-center">
               <div className="mb-6 md:mb-0">
@@ -239,12 +239,13 @@ const Home: React.FC = () => {
                 </div>
               </div>
             </div>
-            <div className="mt-12 pt-8 border-t border-border text-center">
-              <p className="text-muted-foreground">
+            <div className="mt-4 pt-2 text-center">
+              <p className=" mb-0 mt-2 pt-0 pb-1 max-h-0 border-t-2 text-muted-foreground">
                 &copy; {new Date().getFullYear()} Kingdom Kids Secret Place. All rights reserved.
               </p>
             </div>
           </div>
+
         </footer>
       </div>
     </div>

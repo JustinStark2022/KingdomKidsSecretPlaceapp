@@ -310,11 +310,11 @@ const Support: React.FC = () => {
         </CardContent>
       </Card>
       
-      <div className="border-t pt-8 text-center">
-        <p className="text-sm text-muted-foreground">
+      <footer className="border-t border-muted py-1 text-center text-xs text-muted-foreground">
+        <p className="m-0 leading-tight">
           &copy; {new Date().getFullYear()} Kingdom Kids Secret Place. All rights reserved.
         </p>
-      </div>
+      </footer>
     </div>
   );
 };

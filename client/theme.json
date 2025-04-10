@@ -5,11 +5,11 @@
   "radius": 0.5,
   "colors": {
     "background": {
-      "light": "#e5e7eb",  
+      "light": "#d1d5db",  
       "dark": "#1e1e1e"
     },
     "surface": {
-      "light": "#ffffff",
+      "light": "#d1d5db",
       "dark": "#2a2a2a"
     },
     "text": {
@@ -29,7 +29,7 @@
       "dark": "#2c2c2c"
     },
     "card-foreground": {
-      "light": "#1f2937",
+      "light": "#d1d5db",
       "dark": "#f3f4f6"
     }
   }

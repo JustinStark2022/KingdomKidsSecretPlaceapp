@@ -20,7 +20,7 @@ export const useAuth = () => {
       const res = await axios.post("/api/auth/login", credentials);
       const user = res.data.user;
       setCurrentUser(user);
-      return { success: true, user }; // ✅ return user here
+      return { success: true, user }; 
     } catch (err) {
       return { success: false, error: err };
     }

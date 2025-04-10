@@ -85,19 +85,19 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onClose }) => {
   );
 
   const desktopSidebar = (
-    <aside className="hidden md:block w-49 bg-sidebar border-r border-sidebar-border">
-      <nav className="p-4">
+    <aside className="hidden md:block fixed top-15  left-0 h-screen w-[198px] bg-sidebar z-40">
+      <nav className="p-1 ">
         <ul className="space-y-2">
           {links.map((link, index) => (
             <React.Fragment key={link.href}>
               {index === 7 && (
-                <li className="pt-4 border-t border-sidebar-border mt-4" />
+                <li className="pt-4 pr-0 border-t border-sidebar-border mt-4" />
               )}
               <li>
                 <Link href={link.href}>
                   <div
                     className={cn(
-                      "flex items-center space-x-3 p-2 rounded-lg cursor-pointer",
+                      "flex items-center space-x-3 p-2 mr-0  rounded-lg cursor-pointer",
                       location === link.href
                         ? "bg-sidebar-accent text-primary"
                         : "hover:bg-sidebar-accent/50 text-sidebar-foreground"
