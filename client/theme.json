@@ -1,6 +1,6 @@
 {
   "variant": "vibrant",
-  "primary": "hsl(200, 100%, 50%)",
+  "primary": "hsl(195, 100%, 50%)",
   "appearance": "auto",
   "radius": 0.5,
   "colors": {
@@ -25,7 +25,7 @@
       "dark": "#374151"
     },
     "card": {
-      "light": "#ffffff",
+      "light": "#cbd5e1",
       "dark": "#2c2c2c"
     },
     "card-foreground": {

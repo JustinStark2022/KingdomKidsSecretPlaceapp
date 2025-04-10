@@ -10,11 +10,11 @@ const Home: React.FC = () => {
     <div className="min-h-screen relative overflow-hidden">
       {/* Background Image */}
       <div
-        className="absolute inset-0 z-0 bg-cover bg-center opacity-30 dark:opacity-30
+        className="absolute inset-0 z-0 bg-cover bg-center opacity-20 dark:opacity-40
         "
         style={{
-          backgroundImage: "url('/images/Homebg4.png')",
-          backgroundSize: '115%', // Adjusts the image to 50% of the div size
+          backgroundImage: "url('/images/homerunbg1.png')",
+          backgroundSize: '148%', // Adjusts the image to 50% of the div size
         }}
       />
 
@@ -103,44 +103,7 @@ const Home: React.FC = () => {
           </div>
         </section>
 
-        {/* How It Works */}
-        <section className="py-16 px-4">
-          <div className="container mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-              How It <span className="text-primary neon-text">Works</span>
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="flex flex-col items-center text-center">
-                <div className="mb-4 bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center">
-                  <span className="text-2xl font-bold text-primary">1</span>
-                </div>
-                <h3 className="text-xl font-bold mb-2">Create an Account</h3>
-                <p className="text-muted-foreground">
-                  Sign up as a parent and add your children to your family account
-                </p>
-              </div>
-              <div className="flex flex-col items-center text-center">
-                <div className="mb-4 bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center">
-                  <span className="text-2xl font-bold text-primary">2</span>
-                </div>
-                <h3 className="text-xl font-bold mb-2">Set Controls</h3>
-                <p className="text-muted-foreground">
-                  Customize parental controls, screen time limits, and content filtering
-                </p>
-              </div>
-              <div className="flex flex-col items-center text-center">
-                <div className="mb-4 bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center">
-                  <span className="text-2xl font-bold text-primary">3</span>
-                </div>
-                <h3 className="text-xl font-bold mb-2">Start Learning</h3>
-                <p className="text-muted-foreground">
-                  Your children can start earning rewards while learning Biblical values
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
+        
         {/* Testimonials */}
         <section id="testimonials" className="py-16 bg-muted/20 px-4">
           <div className="container mx-auto">
@@ -181,7 +144,46 @@ const Home: React.FC = () => {
             </div>
           </div>
         </section>
+         {/* How It Works */}
+         <section className="py-16 px-4">
+          <div className="container mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+              How It <span className="text-primary neon-text">Works</span>
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="flex flex-col items-center text-center">
+              <div className="mb-4 w-16 h-16 rounded-full flex items-center justify-center shadow-lg bg-primary/80 dark:bg-primary/60 border-4 border-white dark:border-black">
+                <span className="text-2xl font-bold text-white drop-shadow-md">1</span>
+              </div>
 
+                <h3 className="text-xl font-bold mb-2">Create an Account</h3>
+                <p className="text-muted-foreground">
+                  Sign up as a parent and add your children to your family account
+                </p>
+              </div>
+              <div className="flex flex-col items-center text-center">
+              <div className="mb-4 w-16 h-16 rounded-full flex items-center justify-center shadow-lg bg-primary/80 dark:bg-primary/60 border-4 border-white dark:border-black">
+                <span className="text-2xl font-bold text-white drop-shadow-md">2</span>
+              </div>
+
+                <h3 className="text-xl font-bold mb-2">Set Controls</h3>
+                <p className="text-muted-foreground">
+                  Customize parental controls, screen time limits, and content filtering
+                </p>
+              </div>
+              <div className="flex flex-col items-center text-center">
+              <div className="mb-4 w-16 h-16 rounded-full flex items-center justify-center shadow-lg bg-primary/80 dark:bg-primary/60 border-4 border-white dark:border-black">
+                <span className="text-2xl font-bold text-white drop-shadow-md">3</span>
+              </div>
+
+                <h3 className="text-xl font-bold mb-2">Start Learning</h3>
+                <p className="text-muted-foreground">
+                  Your children can start earning rewards while learning Biblical values
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
         {/* Call to Action */}
         <section className="py-16 px-4">
           <div className="container mx-auto text-center">
