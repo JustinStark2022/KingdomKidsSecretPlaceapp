@@ -18,46 +18,94 @@ const Dashboard: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className="space-y-6">
-        <Skeleton className="h-8 w-64" />
-        <Skeleton className="h-4 w-40 mt-2" />
+      <div className="min-h-screen relative overflow-hidden">
+        <div
+          className="absolute inset-0 z-0 bg-cover bg-center opacity-15 dark:opacity-30"
+          style={{
+            marginTop: '-10%',
+            backgroundImage: "url('/images/Homebg.png')",
+            backgroundSize: '148%'
+          }}
+        />
+        <div className="relative z-10 p-6 space-y-6">
+          <Skeleton className="h-4 w-64" />
+          <Skeleton className="h-4 w-40 mt-2" />
+        </div>
       </div>
     );
   }
 
   if (isError) {
     return (
-      <Alert variant="destructive" className="my-4">
-        <AlertCircle className="h-5 w-5" />
-        <AlertTitle>Error</AlertTitle>
-        <AlertDescription className="mt-2">
-          There was a problem loading your dashboard. Please try again.
-        </AlertDescription>
-        <Button className="mt-4" onClick={fetchUser}>
-          Try Again
-        </Button>
-      </Alert>
-    );
-  }
-
-  if (!currentUser) {
-    return (
-      <div className="space-y-6 p-6 border rounded-lg max-w-md mx-auto mt-8 bg-card">
-        <h2 className="text-2xl font-bold mb-2">
-          <span className="text-primary">Welcome</span> to Kingdom Kids!
-        </h2>
-        <p className="text-muted-foreground mb-4">Sign in to continue.</p>
-        <div className="flex gap-4">
-          <Button onClick={() => navigate("/login")} className="w-full">Sign In</Button>
-          <Button variant="outline" onClick={() => navigate("/signup")} className="w-full">Create Account</Button>
+      <div className="min-h-screen relative overflow-hidden">
+        <div
+          className="absolute inset-0 z-0 bg-contain bg-center opacity-15 dark:opacity-30"
+          style={{
+            marginTop: '-10%',
+            backgroundImage: "url('/images/homerunbg1.png')",
+            backgroundSize: '148%'
+          }}
+        />
+        <div className="relative z-10 p-6">
+          <Alert variant="destructive" className="my-4">
+            <AlertCircle className="h-5 w-5" />
+            <AlertTitle>Error</AlertTitle>
+            <AlertDescription className="mt-2">
+              There was a problem loading your dashboard. Please try again.
+            </AlertDescription>
+            <Button className="mt-4" onClick={fetchUser}>
+              Try Again
+            </Button>
+          </Alert>
         </div>
       </div>
     );
   }
 
-  return currentUser.isParent
-  ? <ParentDashboard />
-  : <ChildDashboard childId={currentUser.id} />;
+  if (!currentUser) {
+    return (
+      <div className="min-h-screen relative overflow-hidden">
+        <div
+          className="absolute inset-0 z-0 bg-contain bg-center opacity-15 dark:opacity-30"
+          style={{
+            marginTop: '-10%',
+            backgroundImage: "url('/images/homerunbg1.png')",
+            backgroundSize: '148%'
+          }}
+        />
+        <div className="relative z-10 space-y-6 p-6 border rounded-lg max-w-md mx-auto mt-8 bg-card">
+          <h2 className="text-2xl font-bold mb-2">
+            <span className="text-primary">Welcome</span> to Kingdom Kids!
+          </h2>
+          <p className="text-muted-foreground mb-4">Sign in to continue.</p>
+          <div className="flex gap-4">
+            <Button onClick={() => navigate("/login")} className="w-full">Sign In</Button>
+            <Button variant="outline" onClick={() => navigate("/signup")} className="w-full">Create Account</Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen relative overflow-hidden">
+      <div
+        className="absolute inset-0 z-0 bg-contain bg-center opacity-30 dark:opacity-30"
+        style={{
+          marginTop: '-10%',
+          backgroundImage: "url('/images/dashboardbg1.png')",
+          backgroundSize: '88%'
+        }}
+      />
+      <div className="relative z-10">
+        {currentUser.isParent ? (
+          <ParentDashboard />
+        ) : (
+          <ChildDashboard childId={currentUser.id} />
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default Dashboard;

@@ -10,18 +10,19 @@ const Home: React.FC = () => {
     <div className="min-h-screen relative overflow-hidden">
       {/* Background Image */}
       <div
-        className="absolute inset-0 z-0 bg-cover bg-center opacity-15 dark:opacity-30
+        className="absolute inset-0 z-0 bg-contain bg-center opacity-15 dark:opacity-30
         "
         style={{
+          marginTop: '-10%',
           backgroundImage: "url('/images/homerunbg1.png')",
           backgroundSize: '148%',
         }}
       />
 
       {/* Content Wrapper */}
-      <div className="relative z-10">
+      <div className="relative z-10 ">
         {/* Hero Section */}
-        <section className="py-16 md:py-24 px-4">
+        <section className="md:py-24">
           <div className="container mx-auto text-center">
             <div className="mb-8 flex justify-center">
               <Logo size="large" />

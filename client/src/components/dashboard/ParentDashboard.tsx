@@ -21,17 +21,17 @@ const ParentDashboard: React.FC = () => {
     <div className="space-y-6">
       {/* Title */}
       <div>
-        <h1 className="text-3xl font-bold mb-2">
+        <h1 className=" pl-4 text-3xl font-bold mb-2">
           <span className="text-primary neon-text">Parental</span> Monitoring
         </h1>
-        <p className="text-muted-foreground">
+        <p className=" pl-4 text-muted-foreground">
           Monitor and manage your child's online activities
         </p>
       </div>
 
       {/* Tabs */}
-      <Tabs defaultValue="dashboard" value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="mb-6">
+      <Tabs className="mb-6 pl-4 " defaultValue="dashboard" value={activeTab} onValueChange={setActiveTab}>
+        <TabsList className="mb-6 ">
           <TabsTrigger value="dashboard">
             <Activity className="mr-2 h-4 w-4" />
             Dashboard
@@ -56,7 +56,7 @@ const ParentDashboard: React.FC = () => {
 
         {/* Dashboard Tab Content */}
         <TabsContent value="dashboard">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className=" pl-4 pr-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {/* Game Analysis Card */}
             <Card
               className="cursor-pointer hover:shadow-lg hover:border-primary transition-all"
@@ -91,7 +91,7 @@ const ParentDashboard: React.FC = () => {
                 </div>
                 <h3 className="text-xl font-bold mb-2">Chat Monitoring</h3>
                 <p className="text-muted-foreground mb-4">
-                  Monitor conversations and protect against harmful content
+                  Monitor conversations and protect against predators
                 </p>
                 <Button onClick={() => setActiveTab("chat")}>
                   View Chat Logs
