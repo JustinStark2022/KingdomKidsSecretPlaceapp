@@ -1,13 +1,10 @@
-
 import React, { useState } from "react";
 import {
-  Clock, Calendar, AlarmClock, BarChart, BookOpen, Gamepad,
-  Plus, Smartphone, Laptop, Monitor, Pencil, GraduationCap
+  Clock, Calendar, Smartphone, BarChart, Trash2
 } from "lucide-react";
 import {
   Card, CardContent, Button, Skeleton, Slider, Switch, Label,
   Input, Tabs, TabsContent, TabsList, TabsTrigger,
-  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
   Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger
 } from "@/components/ui";
 import { useQuery, useMutation } from "@tanstack/react-query";
@@ -143,7 +140,6 @@ const ScreenTimeControls: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Add top section here if needed */}
       <Tabs defaultValue="limits">
         <TabsList className="mb-4">
           <TabsTrigger value="limits"><Clock className="h-4 w-4 mr-2" />Time Limits</TabsTrigger>
@@ -152,12 +148,103 @@ const ScreenTimeControls: React.FC = () => {
           <TabsTrigger value="rewards"><BarChart className="h-4 w-4 mr-2" />Rewards</TabsTrigger>
         </TabsList>
 
-        {/* You already have good content layout, so no need to repeat all */}
-        {/* ...just insert your previously working tab contents here */}
+        <TabsContent value="limits">
+          {screenTimeData && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {Object.entries(screenTimeData.dailyLimits).map(([key, value]) => (
+                <div key={key} className="space-y-2">
+                  <Label>{key.toUpperCase()}</Label>
+                  <Slider
+                    defaultValue={[value]}
+                    max={600}
+                    step={15}
+                    onValueChange={([val]) => handleScreenTimeUpdate(key, val)}
+                  />
+                  <p className="text-muted-foreground text-sm">
+                    Used: {formatTime(screenTimeData.usageToday[key as keyof typeof screenTimeData.usageToday])} / {formatTime(value)}
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
+        </TabsContent>
+
+        <TabsContent value="schedule">
+          <Button onClick={() => setScheduleDialogOpen(true)}>Add Schedule</Button>
+          <div className="mt-4 space-y-2">
+            {screenTimeData?.schedule.map(s => (
+              <div key={s.id} className="flex items-center justify-between border p-2 rounded">
+                <span>{getDayLabel(s.dayOfWeek)}: {s.startTime} - {s.endTime}</span>
+                <Switch checked={s.enabled} disabled />
+              </div>
+            ))}
+          </div>
+          <Dialog open={scheduleDialogOpen} onOpenChange={setScheduleDialogOpen}>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Add New Schedule</DialogTitle>
+                <DialogDescription>Choose the day and time range.</DialogDescription>
+              </DialogHeader>
+              <div className="space-y-4">
+                <Label>Day of Week</Label>
+                <Input
+                  value={newSchedule.dayOfWeek}
+                  onChange={(e) => setNewSchedule({ ...newSchedule, dayOfWeek: e.target.value })}
+                />
+                <Label>Start Time</Label>
+                <Input
+                  type="time"
+                  value={newSchedule.startTime}
+                  onChange={(e) => setNewSchedule({ ...newSchedule, startTime: e.target.value })}
+                />
+                <Label>End Time</Label>
+                <Input
+                  type="time"
+                  value={newSchedule.endTime}
+                  onChange={(e) => setNewSchedule({ ...newSchedule, endTime: e.target.value })}
+                />
+              </div>
+              <DialogFooter>
+                <Button onClick={handleAddSchedule}>Add</Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        </TabsContent>
+
+        <TabsContent value="apps">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {screenTimeData?.blockedApps.map(app => (
+              <Card key={app.id}>
+                <CardContent className="p-4 flex justify-between items-center">
+                  <div>
+                    <h4 className="font-bold">{app.name}</h4>
+                    <p className="text-sm text-muted-foreground">{app.category}</p>
+                  </div>
+                  <Switch
+                    checked={app.blocked}
+                    onCheckedChange={(val) => handleToggleAppBlock(app.id, val)}
+                  />
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </TabsContent>
+
+        <TabsContent value="rewards">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {screenTimeData && Object.entries(screenTimeData.timeRewards).map(([source, minutes]) => (
+              <Card key={source}>
+                <CardContent className="p-4">
+                  <h4 className="font-bold capitalize">{source.replace("from", "From ")}</h4>
+                  <p className="text-muted-foreground">{formatTime(minutes)} earned</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </TabsContent>
       </Tabs>
     </div>
   );
 };
 
 export default ScreenTimeControls;
-

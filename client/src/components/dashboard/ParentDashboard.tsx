@@ -21,11 +21,11 @@ const ParentDashboard: React.FC = () => {
     <div className="space-y-6">
       {/* Title */}
       <div>
-        <h1 className=" pl-4 text-3xl font-bold mb-2">
-          <span className="text-primary neon-text">Parental</span> Monitoring
+        <h1 className=" pl-7 pt-7 text-5xl font-bold mb-2">
+          <span className="text-primary neon-text">Kingdom Control Hub</span>
         </h1>
-        <p className=" pl-4 text-muted-foreground">
-          Monitor and manage your child's online activities
+        <p className=" pl-7 text-2xl font-bold text-muted-foreground">
+          Customize content filtering &amp; real-time alerts to fit your needs.
         </p>
       </div>
 
@@ -34,7 +34,7 @@ const ParentDashboard: React.FC = () => {
         <TabsList className="mb-6 ">
           <TabsTrigger value="dashboard">
             <Activity className="mr-2 h-4 w-4" />
-            Dashboard
+            Pending Alerts
           </TabsTrigger>
           <TabsTrigger value="games">
             <Shield className="mr-2 h-4 w-4" />
@@ -68,12 +68,12 @@ const ParentDashboard: React.FC = () => {
                     <Shield className="h-10 w-10 text-primary" />
                   </div>
                 </div>
-                <h3 className="text-xl font-bold mb-2">Game Analysis</h3>
+                <h3 className="text-xl font-bold mb-2">Game Approval Request</h3>
                 <p className="text-muted-foreground mb-4">
-                  Review game content and approve or block access
+                  Review game content &amp; approve or block access
                 </p>
                 <Button onClick={() => setActiveTab("games")}>
-                  View Game Analysis
+                  Game Summary
                 </Button>
               </CardContent>
             </Card>
@@ -89,12 +89,12 @@ const ParentDashboard: React.FC = () => {
                     <MessageSquare className="h-10 w-10 text-primary" />
                   </div>
                 </div>
-                <h3 className="text-xl font-bold mb-2">Chat Monitoring</h3>
+                <h3 className="text-xl font-bold mb-2">Red Flag Alert</h3>
                 <p className="text-muted-foreground mb-4">
-                  Monitor conversations and protect against predators
+                  Red Flag Triggered NEEDS ATTENTION
                 </p>
                 <Button onClick={() => setActiveTab("chat")}>
-                  View Chat Logs
+                  View Alert
                 </Button>
               </CardContent>
             </Card>
@@ -110,9 +110,9 @@ const ParentDashboard: React.FC = () => {
                     <Clock className="h-10 w-10 text-primary" />
                   </div>
                 </div>
-                <h3 className="text-xl font-bold mb-2">Screen Time Controls</h3>
+                <h3 className="text-xl font-bold mb-2">Screen Time Schedule</h3>
                 <p className="text-muted-foreground mb-4">
-                  Set limits and create healthy screen time schedules
+                  Set limits &amp; create healthy screen time schedules
                 </p>
                 <Button onClick={() => setActiveTab("screen-time")}>
                   Manage Screen Time
@@ -131,12 +131,12 @@ const ParentDashboard: React.FC = () => {
                     <Users className="h-10 w-10 text-primary" />
                   </div>
                 </div>
-                <h3 className="text-xl font-bold mb-2">Friend Requests</h3>
+                <h3 className="text-xl font-bold mb-2">Achievement Alert</h3>
                 <p className="text-muted-foreground mb-4">
-                  Review and approve your child's friend connections
+                  Bible Lessons &amp; scriptures mastered.
                 </p>
                 <Button onClick={() => setActiveTab("friends")}>
-                  Manage Friend Requests
+                  See Achievements
                 </Button>
               </CardContent>
             </Card>
@@ -144,51 +144,55 @@ const ParentDashboard: React.FC = () => {
 
           {/* Getting Started Section */}
           <div className="mt-8">
-            <h2 className="text-xl font-bold mb-4">Getting Started</h2>
+            <h2 className="text-xl pl-4 font-bold mb-4">Kingdom Kids Family Discipleship Hub</h2>
             <Card>
-              <CardContent className="p-6 space-y-4">
-                <p>
-                  Welcome to the Kingdom Kids Parental Monitoring dashboard! Here, you can monitor and manage your child's digital experience to ensure it aligns with your family's Christian values.
-                </p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="border rounded-md p-4">
-                    <h3 className="font-semibold mb-2 flex items-center">
-                      <Shield className="h-5 w-5 text-primary mr-2" />
-                      Content Protection
-                    </h3>
-                    <p className="text-sm text-muted-foreground">
-                      Kingdom Kids analyzes game content, chat messages, and online activities to protect your child from inappropriate content.
-                    </p>
-                  </div>
-                  <div className="border rounded-md p-4">
-                    <h3 className="font-semibold mb-2 flex items-center">
-                      <Clock className="h-5 w-5 text-primary mr-2" />
-                      Screen Time Management
-                    </h3>
-                    <p className="text-sm text-muted-foreground">
-                      Set daily limits, schedule device access hours, and reward biblical learning with extra screen time.
-                    </p>
-                  </div>
-                  <div className="border rounded-md p-4">
-                    <h3 className="font-semibold mb-2 flex items-center">
-                      <MessageSquare className="h-5 w-5 text-primary mr-2" />
-                      Chat Monitoring
-                    </h3>
-                    <p className="text-sm text-muted-foreground">
-                      AI-powered chat analysis flags potentially harmful conversations while respecting privacy.
-                    </p>
-                  </div>
-                  <div className="border rounded-md p-4">
-                    <h3 className="font-semibold mb-2 flex items-center">
-                      <Users className="h-5 w-5 text-primary mr-2" />
-                      Friend Approval
-                    </h3>
-                    <p className="text-sm text-muted-foreground">
-                      Review and approve your child's friend requests before they can connect.
-                    </p>
-                  </div>
+            <CardContent className="p-6 space-y-4">
+              <p>
+                A place to monitor your child’s digital world, but also nurture meaningful conversations about faith, character, &amp; what it means to follow Jesus in this digital age.
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="border rounded-md p-4">
+                  <h3 className="font-semibold mb-2 flex items-center">
+                    <Shield className="h-5 w-5 text-primary mr-2" />
+                    Guarding Our Hearts Online
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    <strong>Discussion:</strong> How can we honor God with what we see, hear, &amp; play online? Read <em>Proverbs 4:23</em> — "Above all else, guard your heart, for everything you do flows from it." Talk about how to choose media that builds faith and reflects God's love.
+                  </p>
                 </div>
-              </CardContent>
+
+                <div className="border rounded-md p-4">
+                  <h3 className="font-semibold mb-2 flex items-center">
+                    <Clock className="h-5 w-5 text-primary mr-2" />
+                    Making Time Count
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    <strong>Discussion:</strong> What does it mean to be a good steward of our time? Read <em>Ephesians 5:15-16</em> — “Be very careful... making the most of every opportunity.” Use this to discuss healthy screen time and making room for prayer, play, and rest.
+                  </p>
+                </div>
+
+                <div className="border rounded-md p-4">
+                  <h3 className="font-semibold mb-2 flex items-center">
+                    <MessageSquare className="h-5 w-5 text-primary mr-2" />
+                    Speaking Life Online
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    <strong>Discussion:</strong> Are our words online kind &amp; Christlike? Read <em>Ephesians 4:29</em> — "Do not let any unwholesome talk come out of your mouths…" Ask: How can we be encouraging even in digital spaces?
+                  </p>
+                </div>
+
+                <div className="border rounded-md p-4">
+                  <h3 className="font-semibold mb-2 flex items-center">
+                    <Users className="h-5 w-5 text-primary mr-2" />
+                    Choosing Godly Friends
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    <strong>Discussion:</strong> What kind of friends help us grow closer to Jesus? Read <em>1 Corinthians 15:33</em> — “Bad company corrupts good character.” Discuss how to recognize friends that lift us up &amp; honor our values.
+                  </p>
+                </div>
+              </div>
+            </CardContent>
             </Card>
           </div>
         </TabsContent>
