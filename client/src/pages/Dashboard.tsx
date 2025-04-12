@@ -20,11 +20,11 @@ const Dashboard: React.FC = () => {
     return (
       <div className="min-h-screen relative overflow-hidden">
         <div
-          className="absolute inset-0 z-0 bg-cover bg-center opacity-15 dark:opacity-30"
+          className="absolute  z-0 bg-cover bg-center opacity-20 dark:opacity-10"
           style={{
-            marginTop: '-10%',
-            backgroundImage: "url('/images/Homebg.png')",
-            backgroundSize: '148%'
+            margin: '-30%',
+            backgroundImage: "url('/images/dashpbg2.png')",
+            backgroundSize: '68%'
           }}
         />
         <div className="relative z-10 p-6 space-y-6">
@@ -38,14 +38,7 @@ const Dashboard: React.FC = () => {
   if (isError) {
     return (
       <div className="min-h-screen relative overflow-hidden">
-        <div
-          className="absolute inset-0 z-0 bg-contain bg-center opacity-15 dark:opacity-30"
-          style={{
-            marginTop: '-10%',
-            backgroundImage: "url('/images/homerunbg1.png')",
-            backgroundSize: '148%'
-          }}
-        />
+        
         <div className="relative z-10 p-6">
           <Alert variant="destructive" className="my-4">
             <AlertCircle className="h-5 w-5" />
@@ -65,14 +58,7 @@ const Dashboard: React.FC = () => {
   if (!currentUser) {
     return (
       <div className="min-h-screen relative overflow-hidden">
-        <div
-          className="absolute inset-0 z-0 bg-contain bg-center opacity-15 dark:opacity-30"
-          style={{
-            marginTop: '-10%',
-            backgroundImage: "url('/images/homerunbg1.png')",
-            backgroundSize: '148%'
-          }}
-        />
+        
         <div className="relative z-10 space-y-6 p-6 border rounded-lg max-w-md mx-auto mt-8 bg-card">
           <h2 className="text-2xl font-bold mb-2">
             <span className="text-primary">Welcome</span> to Kingdom Kids!
@@ -88,13 +74,14 @@ const Dashboard: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
+    <div className="min-h-screen w-full relative overflow-x-hidden">
       <div
-        className="absolute inset-0 z-0 bg-contain bg-center opacity-30 dark:opacity-30"
+        className="absolute inset-0 z-0 bg-cover bg-center opacity-60 dark:opacity-35"
         style={{
-          marginTop: '-10%',
-          backgroundImage: "url('/images/dashboardbg1.png')",
-          backgroundSize: '88%'
+          
+          margin: '-30%',
+          backgroundImage: "url('/images/dashpbg2.png')",
+          backgroundSize: '68%'
         }}
       />
       <div className="relative z-10">
